@@ -1,0 +1,323 @@
+{template header}
+{php doAction('xheditor')}
+<div class="midder">
+<div class="mc">
+
+{template menu}
+
+<div class="cleft">
+
+<h1>{if $strTopic[typeid] !='0'}<a href="{SITE_URL}{tsUrl('group','show',array('id'=>$strTopic[groupid],typeid=>$strTopic[typeid]))}">[{$strTopic[type][typename]}]</a>{/if}<a href="{SITE_URL}{tsUrl('group','topic',array('id'=>$strTopic[topicid]))}">{$strTopic[title]}</a></h1>
+
+{if $page == '1'}
+
+<div class="topic-content">
+<div class="user-face">
+<a href="{SITE_URL}{tsUrl('group','user',array('id'=>$strTopic[user][userid]))}" rel="face" uid="$strTopic[user][userid]"><img title="{$strTopic[user][username]}" alt="{$strTopic[user][username]}" src="{$strTopic[user][face]}" width="48"></a>
+<br />
+{php doAction('topic_face_footer',$strTopic)}
+</div>
+<div class="topic-doc">
+<h3>
+<span class="color-green">{php echo date('Y-m-d H:i:s',$strTopic[addtime])}</span>
+<span class="pl20">{php echo L::topic_from}：<a href="{SITE_URL}{tsUrl('group','user',array('id'=>$strTopic[userid]))}" rel="face" uid="$strTopic[userid]">{$strTopic[user][username]}</a></span>
+</h3>
+
+<div class="clear"></div>
+
+<div class="topic-view">
+
+{if $strTopic['after']}
+<ul class="title2">
+{loop $strTopic['after'] $key $item}
+{if $item['title']}
+<li><a href="#title{$item[id]}">{$item['title']}</a></li>
+{/if}
+{/loop}
+</ul>
+{/if}
+
+{if $strTopic['photo']}
+{if $strTopic['photoshow'] == 1 && $isComment == 0 && $strTopic['userid'] !=$TS_USER['user']['userid']}
+<div class="notice">{php echo L::topic_displayphoto}</div>
+{else}
+<a target="_blank" href="{SITE_URL}uploadfile/topic/{$strTopic['photo']}" title="{$strTopic['title']}" alt="{$strTopic['title']}"><img src="{SITE_URL}{php echo tsXimg($strTopic[photo],'topic',500,'',$strTopic[path])}" alt="{$strTopic['title']}" title="{$strTopic['title']}" /></a>
+{/if}
+<br />
+{/if}
+
+{if $strTopic['attach']}
+{if $strTopic['attachshow'] == 1 && $isComment == 0  && $strTopic['userid'] !=$TS_USER['user']['userid']}
+<div class="notice">{php echo L::topic_displayattach}</div>
+{else}
+<div class="attach">
+{php echo L::topic_downattach}：<a href="{SITE_URL}{tsUrl('group','attach',array('ts'=>'down','topicid'=>$strTopic['topicid']))}">{$strTopic['attachname']}
+</a> 
+{if $TS_USER['user']['userid'] == $strTopic['userid'] || $TS_USER['user']['isadmin']==1}
+<a class="delete" title="删除" alt="删除" href="{SITE_URL}index.php?app=" onclick="return confirm('确定删除吗？')">X</a>
+{/if}
+</div>
+{if $strTopic['attachscore']}[-{$strTopic['attachscore']}{php echo L::topic_score}]{/if}
+{/if}
+<br />
+{/if}
+{if $strTopic['music']}
+
+<p id="audioplayer_1">Alternative content</p>
+<script type="text/javascript">  
+AudioPlayer.embed("audioplayer_1", {soundFile: "{$strTopic['music']}"});   
+</script>
+<br />
+{/if}
+
+{if $strTopic['video']}
+
+<embed src="{$strTopic['video']}" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" allowFullScreen="true" mode="transparent" type="application/x-shockwave-flash"></embed>
+<br />
+{/if}
+
+{$strTopic[content]}
+
+</div>
+
+{if $TS_USER[user][userid] == $strTopic[userid] || $TS_USER[user][userid]==$strGroup[userid] ||$strGroupUser[isadmin]=="1" || $TS_USER[user][isadmin]=="1"}
+<p class="btool">
+{if $TS_USER[user][userid]==$strGroup[userid] ||$strGroupUser[isadmin]=="1" || $TS_USER[user][isadmin]=="1"}
+<a href="{SITE_URL}index.php?app=group&ac=do&ts=topic_isclose&topicid={$strTopic[topicid]}">{if $strTopic[isclose]=='0'}{php echo L::topic_close}{else}{php echo L::topic_open}{/if}</a> 
+
+<a href="{SITE_URL}index.php?app=group&ac=do&ts=topic_istop&topicid={$strTopic[topicid]}">{if $strTopic[istop]=='0'}{php echo L::topic_top}{else}{php echo L::topic_canceltop}{/if}</a> 
+
+<a href="{SITE_URL}index.php?app=group&ac=do&ts=isposts&topicid={$strTopic[topicid]}">{if $strTopic[isposts]==0}{php echo L::topic_posts}{else}{php echo L::topic_cancelposts}{/if}</a>
+
+<a href="{SITE_URL}index.php?app=group&ac=do&ts=topic_isshow&topicid={$strTopic[topicid]}">{if $strTopic[isshow]=='0'}{php echo L::topic_hide}{else}{php echo L::topic_show}{/if}</a>
+
+<a href="{SITE_URL}index.php?app=group&ac=topicmove&topicid={$strTopic[topicid]}">{php echo L::topic_move}</a>
+
+{/if}
+<a href="{SITE_URL}index.php?app=group&ac=topicedit&topicid={$strTopic[topicid]}">{php echo L::topic_edit}</a> 
+<a href="{SITE_URL}index.php?app=group&ac=do&ts=deltopic&topicid={$strTopic['topicid']}" onClick="return confirm('{php echo L::topic_oktodelete}?')">{php echo L::topic_delete}</a>
+
+</p>
+
+<div class="clear"></div>
+
+<div class="cmen" style="position:absolute; margin: 10px 230px;display:none;">
+{loop $color $i $val}
+<a href="{SITE_URL}index.php?app=group&ac=do&&ts=topic_color&topicid={$strTopic[topicid]}&color={php echo $i+1;}" style="background-color:{$val}"></a>
+{/loop}
+</div>
+{/if}
+
+
+{loop $strTopic['after'] $key $item}
+{if $item['title']}
+<h4><a name="title{$item['id']}"></a>{$item['title']}</h4>
+{/if}
+<div class="after-view">
+{if $item['photo']}
+<a target="_blank" href="{SITE_URL}uploadfile/after/{$item['photo']}" title="{$strTopic['title']}" alt="{$strTopic['title']}">
+<img src="{SITE_URL}{php echo tsXimg($item[photo],'after',500,'',$item[path])}" alt="{$item['title']}" title="{$item['title']}" />
+</a>
+<br />
+{/if}
+
+{if $item['attach']}
+附件下载：<a href="{SITE_URL}uploadfile/after/{$item['attach']}">{$item['attachname']}</a>
+<br />
+{/if}
+
+{$item['content']}
+{if  $item['userid'] == $TS_USER['user']['userid'] || $TS_USER['user']['isadmin']==1}
+<br />
+<p class="btool">
+<a href="{SITE_URL}{tsUrl('group','after',array('ts'=>'edit','aid'=>$item['id']))}">{php echo L::topic_edit}</a>
+<a href="{SITE_URL}{tsUrl('group','after',array('ts'=>'delete','aid'=>$item['id']))}" onClick="return confirm('{php echo L::topic_oktodelete}?')">{php echo L::topic_delete}</a>
+ <a href="{SITE_URL}{tsUrl('group','after',array('ts'=>'up','id'=>$item['id']))}" onClick="return confirm('确定上移?')">上移</a>
+<a href="{SITE_URL}{tsUrl('group','after',array('ts'=>'down','id'=>$item['id']))}" onClick="return confirm('确定下移?')">下移</a> 
+</p>
+{/if}
+</div>
+{/loop}
+<div class="clear"></div>
+{if $strTopic['userid'] == $TS_USER['user']['userid'] || $TS_USER['user']['isadmin']==1}
+<p class="bltool">
+<a href="{SITE_URL}{tsUrl('group','after',array('topicid'=>$strTopic['topicid']))}">{php echo L::topic_afteradd}</a>
+</p>
+{/if}
+</div>
+</div>
+<div class="clear"></div>
+
+<div style="text-align:right;">
+<a id="topiclove" class="bottomA" href="javascript:void('0');" onclick="loveTopic('{$strTopic['topicid']}')">{$strTopic['count_love']}人喜欢</a>
+</div>
+
+<div class="clear"></div>
+
+
+<div class="tags">
+{loop $strTopic[tags] $key $item}
+<a rel="tag" title="" class="post-tag" href="{SITE_URL}{tsUrl('group','tag',array('name'=>urlencode($item[tagname])))}">{$item[tagname]}</a>
+{/loop}
+{if $isGroupUser}
+<a rel="tag" href="javascript:void(0);" onClick="showTagFrom()">{php echo L::topic_addtag}</a>
+{/if}
+
+<p id="tagFrom" style="display:none">
+<input style="width:250px;padding:3px 2px;" type="text" name="tags" id="tags" /> <button type="submit" class="subab" onClick="savaTag({$topicid})">{php echo L::topic_add}</button> <a href="javascript:void(0);" onClick="showTagFrom()">{php echo L::topic_cancel}</a>
+</p>
+</div>
+<div class="clear"></div>
+
+<div>
+{if $upTopic}{php echo L::topic_previous}：<a href="{SITE_URL}{tsUrl('group','topic',array('id'=>$upTopic['topicid']))}">{$upTopic['title']}</a>{/if}
+
+{if $downTopic}<br />{php echo L::topic_next}：<a href="{SITE_URL}{tsUrl('group','topic',array('id'=>$downTopic['topicid']))}">{$downTopic['title']}</a>{/if}
+</div>
+
+<div class="clear"></div>
+
+{php doAction('topic_footer',$strTopic,'468')}
+
+{/if}
+
+<div class="clear"></div>
+
+<h2>{php echo L::topic_usercomment}<i>({$strTopic['count_comment']})</i></h2>
+
+{if $page == '1'}
+<div style="text-align:right;">
+{if $sc=='asc'}
+<a href="{SITE_URL}{tsUrl('group','topic',array('id'=>$topicid,'sc'=>'desc'))}" rel="nofollow">{php echo L::topic_desc}</a>
+{else}
+<a href="{SITE_URL}{tsUrl('group','topic',array('id'=>$topicid))}">{php echo L::topic_asc}</a>
+{/if}
+</div>
+
+{/if}
+
+<ul class="comment">
+{if is_array($arrTopicComment)}
+{loop $arrTopicComment $key $item}
+<li class="clearfix" id="l_{$item[commentid]}">
+<div class="user-face">
+<a href="{SITE_URL}{tsUrl('group','user',array('id'=>$item[user][userid]))}" rel="face" uid="$item[user][userid]"><img title="{$item[user][username]}" alt="{$item[user][username]}" src="{$item[user][face]}" width="48" /></a>
+</div>
+<div class="reply-doc">
+<h4>{php echo date('Y-m-d H:i:s',$item[addtime])}
+	<a href="{SITE_URL}{tsUrl('group','user',array('id'=>$item[user][userid]))}" rel="face" uid="$item[user][userid]" style="margin-left:5px; margin-right:5px;">{$item[user][username]}</a>
+    <i>$item[l]#</i>
+</h4>
+
+
+{if $item[referid] !='0'}
+<div class="recomment"><a href="{SITE_URL}{tsUrl('group','user',array('id'=>$item[recomment][user][userid]))}"><img src="{$item[recomment][user][face]}" width="24" align="absmiddle"></a> <strong><a href="{SITE_URL}{tsUrl('group','user',array('id'=>$item[recomment][user][userid]))}" rel="face" uid="$item[recomment][user][userid]">{$item[recomment][user][username]}</a></strong>：{$item[recomment][content]}</div>
+{/if}
+<p>
+{if $item['photo']}
+<a target="_blank" href="{SITE_URL}uploadfile/comment/{$item['photo']}" title="{$strTopic['title']}" alt="{$strTopic['title']}">
+<img src="{SITE_URL}{php echo tsXimg($item[photo],'comment',500,'',$item[path])}" alt="{$strTopic['title']}" title="{$strTopic['title']}" />
+</a>
+<br />
+{/if}
+
+{if $item['attach']}
+{php echo L::topic_downattach}：<a href="{SITE_URL}uploadfile/comment/{$item['attach']}">{$item['attachname']}</a>
+<br />
+{/if}
+
+{$item[content]}
+</p>
+
+<p class="btool">
+{if $isGroupUser != '0'}
+<span><a href="javascript:void(0)"  onclick="commentOpen({$item[commentid]},{$item[topicid]})">{php echo L::topic_reply}</a></span>
+{/if}
+
+{if $TS_USER[user][userid] == $strGroup[userid] || $TS_USER[user][userid] == $item[userid] || $strGroupUser[isadmin]==1 || $TS_USER[user][isadmin]==1}
+<span><a class="j a_confirm_link" href="{SITE_URL}index.php?app=group&ac=comment&ts=delete&commentid={$item[commentid]}" rel="nofollow" onClick="return confirm('{php echo L::topic_oktodelete}?')">{php echo L::topic_delete}</a>
+</span>
+{/if}
+</p>
+
+
+<div id="rcomment_{$item[commentid]}" style="display:none">
+<textarea style="width:90%;height:60px;font-size:14px;" id="recontent_{$item[commentid]}" type="text" onKeyDown="keyRecomment({$item[commentid]},{$item[topicid]},event)"></textarea>
+<p><a class="submit" href="javascript:void(0);" onClick="recomment({$item[commentid]},{$item[topicid]})" id="recomm_btn_$item[commentid]">{php echo L::topic_submit}</a> <a href="javascript:void('0');" onclick="commentOpen({$item['commentid']},{$item['topicid']})">取消</a></p>
+</div>
+</div>
+<div class="clear"></div>
+</li>
+{/loop}
+{/if}
+</ul>
+
+<div class="page">{$pageUrl}</div>
+
+<h2>{php echo L::topic_addcomment}</h2>
+<div style="background:#f4f4ec;padding:10px;">
+{if intval($TS_USER[user][userid])==0}
+<div style="border:solid 1px #DDDDDD; text-align:center;padding:20px 0"><a href="{SITE_URL}{tsUrl('user','login')}">{php echo L::public_login}</a> | <a href="{SITE_URL}{tsUrl('user','register')}">{php echo L::public_register}</a></div>
+{elseif $isGroupUser == 0}
+不是本组成员不能回应此贴哦
+{elseif $strTopic[iscomment] == 1 && $strTopic[userid] != $TS_USER[user][userid]}
+本帖除作者外不允许任何人评论
+{elseif $strTopic[isclose]=='1'}
+该帖子已被关闭，无法评论
+{else}
+
+<form method="POST" action="{SITE_URL}index.php?app=group&ac=comment&ts=do" onSubmit="return submitonce(this)" enctype="multipart/form-data">
+
+<table width="100%">
+<tr><td width="40" valign="top">内容*</td><td><textarea style="width:96%;height:100px;font-size:14px;" id="bbcodem" name="content"></textarea></td></tr>
+<tr><td></td><td><input type="hidden" name="topicid" value="{$strTopic[topicid]}" />
+<input class="submit" type="submit" value="提交评论" style="margin:10px 0px" /></td></tr>
+</table>
+</form>
+{/if}
+
+</div>
+
+</div>
+
+<div class="cright">
+<p class="pl2"><a href="{SITE_URL}{tsUrl('group','show',array('id'=>$strGroup[groupid]))}">{php echo L::topic_return}{$strGroup[groupname]}</a></p>
+<p>
+<a class="submit" href="{SITE_URL}{tsUrl('group','add',array('id'=>$strGroup[groupid]))}">
+{php echo L::topic_addpost}
+</a>
+</p>
+
+<div>
+<h2>{php echo L::topic_wholikethispost}</h2>
+<script>topic_collect_user('{$strTopic[topicid]}')</script>
+<div id="collects">
+<div style="padding:10px;text-align:center;"><img src="{SITE_URL}public/images/loading.gif" />{php echo L::topic_loading}......</div>
+</div>
+</div>
+
+<h2 class="usf">{php echo L::topic_newtopic}</h2>
+<div class="indent newtopic">
+<ul>
+{loop $newTopic $key $item}
+<li>
+{if $item['appkey'] != 'group' && $item['appkey']!=''}
+<a target="_blank" style="color:#999999;font-size: 12px;margin-right: 5px;" class="titles-type" href="{SITE_URL}{php echo tsUrl($item['appkey'])}">[{$item['appname']}]</a>
+<a title="{$item[title]}" href="{SITE_URL}{php echo tsUrl($item['appkey'],$item['appaction'],array('id'=>$item['askid']))}">{$item[title]}</a>
+{else}
+<a title="{$item[title]}" href="{SITE_URL}{tsUrl('group','topic',array('id'=>$item[topicid]))}">{php echo getsubstrutf8($item[title],0,25)}</a> 
+{/if}
+
+</li>
+{/loop}
+</ul>
+</div>
+
+<div class="clear"></div>
+{php doAction('group_topic_right_footer',$strTopic,'300')}
+</div>
+
+</div>
+</div>
+{php doAction('group_topic_footer')}
+{template footer}

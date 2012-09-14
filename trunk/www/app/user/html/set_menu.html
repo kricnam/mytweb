@@ -1,0 +1,16 @@
+<h1>{php echo L::setmenu_userinfomanage}</h1>
+<div class="tabnav">
+<ul>
+<li <!--{if $ts=="base"}-->class="select"<!--{/if}-->><a href="{SITE_URL}{tsUrl('user','set',array(ts=>base))}">{php echo L::setmenu_base}</a></li>
+<li <!--{if $ts=="face"}-->class="select"<!--{/if}-->><a href="{SITE_URL}{tsUrl('user','set',array(ts=>face))}">{php echo L::setmenu_face}</a></li>
+<li <!--{if $ts=="pwd"}-->class="select"<!--{/if}-->><a href="{SITE_URL}{tsUrl('user','set',array(ts=>pwd))}">{php echo L::setmenu_password}</a></li>
+
+<li <!--{if $ts=="email"}-->class="select"<!--{/if}-->><a href="{SITE_URL}{tsUrl('user','set',array(ts=>email))}">{php echo L::setmenu_account}</a></li>
+
+<li <!--{if $ts=="city"}-->class="select"<!--{/if}-->><a href="{SITE_URL}{tsUrl('user','set',array(ts=>city))}">常居地</a></li>
+
+<li {if $ac=='verify'}class="select"{/if}><a href="{SITE_URL}{tsUrl('user','verify')}">{php echo L::setmenu_verify}<a/></li>
+
+<li <!--{if $ts=="tag"}-->class="select"<!--{/if}-->><a href="{SITE_URL}{tsUrl('user','set',array(ts=>tag))}">{php echo L::setmenu_tags}</a></li>
+</ul>
+</div>
