@@ -1,0 +1,48 @@
+{template header}
+
+<div class="midder">
+<div class="mc">
+
+{template menu}
+
+<div class="cleft">
+
+<div><a href="{SITE_URL}{tsUrl('group','cate')}">分类</a> >> <a href="{SITE_URL}{tsUrl('group','cate',array('ts'=>'2','cateid'=>$oneCate['cateid']))}">{$oneCate['catename']}</a> >> <a href="{SITE_URL}{tsUrl('group','cate',array('ts'=>'3','cateid'=>$twoCate['cateid']))}">{$twoCate['catename']}</a> >> <a href="{SITE_URL}{tsUrl('group','cate',array('ts'=>'group','cateid'=>$strCate['cateid']))}">$strCate['catename']</a></div>
+
+
+<div class="categroup">
+<ul>
+{loop $arrGroup $key $item}
+<li>
+<a href="{SITE_URL}{tsUrl('group','show',array('id'=>$item['groupid']))}">
+
+{if $item['groupicon']}
+<img src="{SITE_URL}{php echo tsXimg($item['groupicon'],'group','48','48',$item['path'],'1')}" />
+{else}
+<img src="{SITE_URL}public/images/group.jpg" width="48" />
+{/if}
+
+</a>
+
+<a href="{SITE_URL}{tsUrl('group','show',array('id'=>$item['groupid']))}">
+{$item['groupname']}
+</a>
+<br />
+{php echo getsubstrutf8($item['groupdesc'],0,40)}
+</li>
+{/loop}
+</ul>
+</div>
+
+<div class="page">{$pageUrl}</div>
+
+
+</div>
+
+<div class="cright">
+
+
+</div>
+</div>
+</div>
+{template footer}

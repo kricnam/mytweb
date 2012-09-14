@@ -1,0 +1,29 @@
+{template header}
+
+<!--main-->
+<div class="midder">
+<div class="mc">
+{template set_menu}
+
+<div class="utable">
+<form method="POST" action="{SITE_URL}index.php?app=user&ac=do&ts=setemail">
+<table cellpadding="5" cellspacing="5">
+<tr>
+<th>{php echo L::setemail_accountnow}：</th><td>{$strUser['email']}</td>
+</tr>
+<tr>
+<th>{php echo L::setemail_newaccount}：</th><td><input class="uinput" name="email" type="email" /></td>
+</tr>
+
+<tr><th></th><td><input class="submit" type="submit" value="{php echo L::setemail_submit}"  />（{php echo L::setemail_submittip}）</td></tr>
+
+</table>
+</form>
+</div>
+
+
+
+</div>
+</div>
+
+{template footer}

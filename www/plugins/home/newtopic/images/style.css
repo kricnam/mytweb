@@ -1,0 +1,100 @@
+.mainlist {
+	margin: 0 auto 25px;
+	overflow: hidden;
+	width: 600px;
+}
+.mainlist_img {
+	float: left;
+	height: 120px;
+	overflow: hidden;
+	position: relative;
+	width: 110px;
+	border:1px solid #DDDDDD;
+}
+.mainlist_content {
+	float: left;
+	height: 120px;
+	margin-left: 16px;
+	overflow: hidden;
+	width: 410px;
+}
+.mainlist_content h1 {
+	background: none repeat scroll 0 0 #F6FBFD;
+	font-size: 14px;
+	font-weight: normal;
+	height: 22px;
+	line-height: 22px;
+	margin: 0;
+	overflow: hidden;
+	padding-left: 8px;
+	text-align: left;
+	width: 410px;
+}
+a.link1:link, a.link1:visited {
+	color: #FF9900;
+	text-decoration: none;
+}
+.mainlist_content .summary {
+	color: #666666;
+	line-height: 20px;
+	margin: 8px 0 0 8px;
+}
+.mainlist_content .summary span {
+	color: #999999;
+}
+.star {
+	background: url("u148_main_bg.gif") no-repeat scroll 0 -210px transparent;
+	display: inline-block;
+	height: 16px;
+	overflow: hidden;
+	vertical-align: middle;
+}
+.level4 {
+	width: 60px;
+}
+.mainlist_content .summary span {
+	color: #999999;
+}
+.height1 {
+	height: 10px;
+	overflow: hidden;
+}
+.mainlist_content .summary .comments {
+	background: url("u148_main_bg.gif") no-repeat scroll -448px -210px transparent;
+	display: inline-block;
+	height: 13px;
+	width: 20px;
+}
+.view {
+	background: url("u148_main_bg.gif") no-repeat scroll 0 -90px transparent;
+	float: right;
+	height: 80px;
+	overflow: hidden;
+	text-align: center;
+	width: 51px;
+}
+.viewnum {
+	color: #FF9900;
+	font-size: 16px;
+	font-weight: bold;
+	height: 24px;
+	line-height: 24px;
+	margin-top: 8px;
+	overflow: hidden;
+	width: 51px;
+}
+.viewed {
+	color: #FF9900;
+	height: 20px;
+	line-height: 20px;
+	overflow: hidden;
+	width: 51px;
+}
+.toview {
+	height: 25px;
+	line-height: 26px;
+	margin-top: 2px;
+	overflow: hidden;
+	text-align: center;
+	width: 51px;
+}

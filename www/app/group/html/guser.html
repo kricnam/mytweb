@@ -1,0 +1,91 @@
+{template header}
+
+<div class="midder">
+
+<div class="mc">
+<h1>{$strGroup[groupname]}成员</h1>
+<div class="cleft">
+
+
+
+<div class="obss">
+
+<h2>组长</h2>
+<dl class="obu">
+<dt>
+<a class="nbg" href="{SITE_URL}{tsUrl('group','user',array('id'=>$strLeader[userid]))}"><img alt="{$strLeader[username]}" src="{$strLeader[face]}"></a>
+</dt>
+<dd>
+{$strLeader[username]}
+
+</dd>
+</dl>
+<div class="clear"></div>
+
+<h2>管理员</h2>
+
+<!--{loop $arrAdmin $key $item}-->
+<dl class="obu">
+<dt>
+<a class="nbg" href="{SITE_URL}{tsUrl('group','user',array('id'=>$item[userid]))}"><img alt="{$item[username]}" src="{$item[face]}"></a>
+</dt>
+<dd>
+{$item[username]}
+<br />
+<a href="{SITE_URL}{tsUrl('group','guser',array('ts'=>'manager','groupid'=>$strGroup['userid'],'userid'=>$item['userid']))}">
+{if $item['isadmin']==1}
+取消管理员
+{elseif $item['isadmin']==0}
+设为管理员
+{/if}
+<br />
+<a href="">删除</a>
+</a>
+</dd>
+</dl>
+<!--{/loop}-->
+
+<div class="clear"></div>
+
+<h2>普通成员</h2>
+
+<!--{loop $arrGroupUser $key $item}-->
+<dl class="obu">
+<dt>
+<a class="nbg" href="{SITE_URL}{tsUrl('group','user',array('id'=>$item[userid]))}"><img alt="{$item[username]}" src="{$item[face]}"></a>
+</dt>
+<dd>
+{$item[username]}
+<br />
+<a href="{SITE_URL}{tsUrl('group','guser',array('ts'=>'manager','groupid'=>$strGroup['userid'],'userid'=>$item['userid']))}">
+{if $item['isadmin']==1}
+取消管理员
+{elseif $item['isadmin']==0}
+设为管理员
+{/if}
+</a>
+<br />
+<a href="">删除</a>
+</dd>
+</dl>
+<!--{/loop}-->
+
+<div class="clear"></div>
+
+</div>
+
+<div class="page">{$pageUrl}</div>
+
+<br />
+
+</div>
+
+
+<div class="cright">
+<p class="pl2">&gt; <a href="{SITE_URL}{tsUrl('group','show',array('id'=>$strGroup[groupid]))}">返回{$strGroup[groupname]}</a></p>
+
+</div>
+</div>
+</div>
+
+{template footer}

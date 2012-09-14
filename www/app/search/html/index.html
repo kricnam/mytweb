@@ -1,0 +1,41 @@
+{template header}
+
+<div class="midder">
+
+<div class="mc">
+
+<div class="s_index">
+
+<div class="s_menu">
+<a <!--{if $ts==''}-->class="s_select"<!--{/if}--> href="{SITE_URL}{tsUrl('search')}">{php echo L::index_all}</a> | 
+<a <!--{if $ts=='group'}-->class="s_select"<!--{/if}--> href="{SITE_URL}{tsUrl('search','index',array(ts=>group))}">{php echo L::index_group}</a> | 
+<a <!--{if $ts=='topic'}-->class="s_select"<!--{/if}--> href="{SITE_URL}{tsUrl('search','index',array(ts=>topic))}">{php echo L::index_topic}</a> | 
+<a <!--{if $ts=='user'}-->class="s_select"<!--{/if}--> href="{SITE_URL}{tsUrl('search','index',array(ts=>user))}">{php echo L::index_user}</a>
+</div>
+
+<div>
+<form method="GET" action="{SITE_URL}index.php">
+<input type="hidden" name="app" value="search" />
+<input type="hidden" name="ac" value="s" />
+
+<!--{if $ts=='group'}-->
+<input type="hidden" name="ts" value="group" />
+<!--{elseif $ts=='topic'}-->
+<input type="hidden" name="ts" value="topic" />
+<!--{elseif $ts=='user'}-->
+<input type="hidden" name="ts" value="user" />
+<!--{else}-->
+<!--{/if}-->
+
+<input class="s_input" name="kw"  /> 
+<input style="font-size:14px;" class="submit" type="submit" value="{php echo L::index_search}" />
+</form>
+</div>
+
+
+</div>
+</div>
+</div>
+
+
+{template footer}

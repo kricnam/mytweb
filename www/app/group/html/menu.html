@@ -1,0 +1,23 @@
+<div style="position: relative;">
+<div class="top-wp">
+<ul class="tabs">
+<li><a {if $ac=='topic' && $ts=='list'}class="current"{/if} href="{SITE_URL}{tsUrl('group','topic',array('ts'=>'list'))}"><span>帖子</span></a></li>
+
+<!--{if $TS_USER['user']['userid']}-->
+<li><a <!--{if $ac=='user' && $strUser['userid']==$TS_USER['user']['userid']}-->class="current"<!--{/if}--> href="{SITE_URL}{tsUrl('group','user',array('id'=>$TS_USER['user']['userid']))}">我的</a></li>
+<!--{/if}-->
+<li><a {if $ac=='index'}class="current"{/if} href="{SITE_URL}{tsUrl('group')}">小组</a></li>
+<li><a {if $ac=='photo'}class="current"{/if} href="{SITE_URL}{tsUrl('group','photo')}"><span>图片</span></a></li>
+<li><a {if $ac=='tag'}class="current"{/if} href="{SITE_URL}{tsUrl('group','tag',array('ts'=>'list'))}"><span>标签</span></a></li>
+
+
+<li><a {if $ac=='cate'}class="current"{/if} href="{SITE_URL}{tsUrl('group','cate')}"><span>分类</span></a></li>
+
+<li style="float:right;"><a style="margin-right:0px;background:#336699;color:#FFFFFF;" href="{SITE_URL}{tsUrl('group','add',array('ts'=>'speed'))}">快速发帖</a></li>
+
+</ul>
+</div>
+
+
+</div>
+<div class="clear"></div>
