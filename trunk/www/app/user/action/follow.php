@@ -53,6 +53,14 @@ switch($ts){
 			exit;
 		}
 		
+		if($userid == $userid_follow){
+			echo json_encode(array(
+				'status'=>0,
+				'msg'=>'自己不能关注自己哦',
+			));
+			exit;
+		}
+		
 		$isFollow = $new['user']->findCount('user_follow',array(
 			'userid'=>$userid,
 			'userid_follow'=>$userid_follow,

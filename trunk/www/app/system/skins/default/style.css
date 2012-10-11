@@ -50,8 +50,8 @@ font-weight:bold;
 
 
 /*中部*/
-.midder{margin:0 auto;padding:10px;overflow:hidden;background:#FFFFFF;}
-.midder table{border:1px solid #DDDDDD;width:100%;border-collapse:collapse;
+.midder{margin:0 auto;padding:10px; margin-left:100px; overflow:hidden;background:#FFFFFF;}
+.midder table{border:1px solid #DDDDDD; width:100%;border-collapse:collapse;
 border-spacing:0;} 
 .midder table tr td{border-bottom:1px solid #DDDDDD;height:29px;line-height:29px;padding:0 20px;vertical-align:top;margin:0;
 outline:0 none;}

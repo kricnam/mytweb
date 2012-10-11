@@ -14,7 +14,7 @@ if($TS_USER['user'] == ''){
 	include template("index");
 	
 }else{
-	
-	header("Location: ".SITE_URL.tsUrl('group','user',array('id'=>$TS_USER['user']['userid'])));
+ 
+	include template("index");
 	
 }

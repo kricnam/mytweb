@@ -30,6 +30,9 @@ class tsTemplate {
 	 */
 	function parse($template) {
 	
+		//清除模板中换行
+		//$template = preg_replace('/[\n\r\t]/', '', $template);
+	
 		//BY QIUJUN 2011-10-22 增加tsurl路由模板标签
 		$template = preg_replace("/\{tsUrl(.*?)\}/s", "{php echo tsurl\\1}", $template);
 	

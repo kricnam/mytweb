@@ -72,7 +72,7 @@ $(document).ready(function() {
 			}
 		},
 
-		// the errorPlacement has to take the table layout into account
+		
 		errorPlacement: function(error, element) {
 			if ( element.is(":radio") )
 				error.appendTo( element.parent().next().next() );

@@ -8,21 +8,21 @@ echo '<!--开始-->
 <div class="slides_container">
 
 <div class="slide">
-<a href="'.SITE_URL.tsUrl('user','register').'"><img width="600" height="210" src="'.SITE_URL.'plugins/home/slide/images/2.png" /></a>
+<a href="'.SITE_URL.tsUrl('user','register').'"><img width="600" height="210" src="'.SITE_URL.'plugins/home/slide/images/2.png" alt="开源社区" /></a>
 <div class="caption" style="bottom:0">
 <p>欢迎使用ThinkSAAS社区系统</p>
 </div>
 </div>
 
 <div class="slide">
-<a href="'.SITE_URL.tsUrl('user','register').'"><img width="600" height="210" src="'.SITE_URL.'plugins/home/slide/images/demo.png" /></a>
+<a href="'.SITE_URL.tsUrl('user','register').'"><img width="600" height="210" src="'.SITE_URL.'plugins/home/slide/images/demo.png"  alt="论坛" /></a>
 <div class="caption" style="bottom:0">
 <p>欢迎使用ThinkSAAS社区系统</p>
 </div>
 </div>
 
 <div class="slide">
-<a href="'.SITE_URL.tsUrl('user','register').'"><img width="600" height="210" src="'.SITE_URL.'plugins/home/slide/images/zp.png" /></a>
+<a href="'.SITE_URL.tsUrl('user','register').'"><img width="600" height="210" src="'.SITE_URL.'plugins/home/slide/images/zp.png"  alt="bbs" /></a>
 <div class="caption" style="bottom:0">
 <p>欢迎使用ThinkSAAS社区系统</p>
 </div>
