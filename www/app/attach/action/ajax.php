@@ -142,7 +142,7 @@ switch($ts){
 		
 		$menu = substr($strAttach['userid'],0,1);
 
-		$strAttach['attachurl'] = 'uploadfile/attach/'.$menu.'/'.$strAttach['attachurl'];
+		$strAttach['attachurl'] = 'uploadfile/attach/'.$strAttach['attachurl'];
 		
 		header("Location: ".SITE_URL.$strAttach['attachurl']);
 		

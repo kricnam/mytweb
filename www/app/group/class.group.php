@@ -56,7 +56,7 @@ class group extends tsApp{
 	
 	//获取最新创建的小组
 	function getNewGroup($num){
-		$arrNewGroups = $this->db->fetch_all_assoc("select groupid from ".dbprefix."group where isshow='0' order by addtime desc limit $num");
+		$arrNewGroups = $this->db->fetch_all_assoc("select groupid from ".dbprefix."group where `isaudit`='0' order by addtime desc limit $num");
 		if(is_array($arrNewGroups)){
 			foreach($arrNewGroups as $item){
 				$arrNewGroup[] = $this->getOneGroup($item['groupid']);

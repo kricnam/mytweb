@@ -133,7 +133,7 @@ if(is_file('app/'.$app.'/action/'.$ac.'.php')){
 			
 			$loginUserData = $new[$app]->find('user_info',array(
 				'email'=>$_COOKIE['ts_email'],
-			),'userid,username,areaid,path,face,count_score,isadmin,uptime');
+			),'userid,username,province,path,face,count_score,isadmin,uptime');
 			
 			//用户session信息
 			$_SESSION['tsuser']	= $loginUserData;

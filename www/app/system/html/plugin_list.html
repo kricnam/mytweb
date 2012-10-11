@@ -14,9 +14,9 @@
 </div>
 
 <table  cellpadding="0" cellspacing="0">
-<tr class="old"><td width="100">名称</td ><td width="30">版本</td><td>作者/介绍</td><td width="100">操作</td></tr>
+<tr class="old"><td width="30%">名称</td ><td>介绍</td><td width="100">操作</td></tr>
 <!--{loop $arrPlugin $key $item}-->
-<tr class="odd"><td>{$item[about][name]} ({$item[name]})</td><td>{$item[about][version]}</td><td>{$item[about][desc]}<br />作者：<a href="{$item[about][author_url]}">{$item[about][author]}</a></td><td>
+<tr class="odd" "30%"><td>{$item[about][name]} ({$item[name]})</td><td>{$item[about][desc]}</td><td>
 
 <!--{if in_array($item[name],$app_plugins)}--><a href="index.php?app=system&ac=plugin&ts=do&apps={$apps}&pname={$item[name]}&isused=0">停用</a><!--{else}--><a href="index.php?app=system&ac=plugin&ts=do&apps={$apps}&pname={$item[name]}&isused=1">启用</a><!--{/if}-->
 

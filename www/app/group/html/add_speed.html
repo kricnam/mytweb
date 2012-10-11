@@ -38,8 +38,6 @@
 	
 <tr><td>{php echo L::addspeed_comment}:</td><td><input type="radio" checked="select" name="iscomment" value="0" />允许 <input type="radio" name="iscomment" value="1" />不允许</td></tr>
 
-<!-- <tr><td>标签：</td><td><input style="padding:3px 0;width:300px;display:none;color:#999999" name="tag" def="多个请以,分割"  onfocus="if(this.value==$(this).attr('def')) this.value=''" onblur="if(this.value=='') this.value=$(this).attr('def')"/><input type="checkbox" name="tag_ai" checked="checked"  value="1" onclick="tag_ai_o(this)"/>自动获取</td></tr> -->
-
 <tr><td>{php echo L::addspeed_tag}:</td><td><input type="text" name="tag" /> (多个标签请用,号分开)</td></tr>
 
 {php doAction('group_add_speed_post')}

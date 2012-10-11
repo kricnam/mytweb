@@ -158,6 +158,11 @@ defined('IN_TS') or die('Access Denied.');
 		case "deldata":
 			$userid = intval($_GET['userid']);
 			
+			//删除文章
+			$new['user']->delete('article',array(
+				'userid'=>$userid,
+			));
+			
 			//删除小组
 			$new['user']->delete('group',array(
 				'userid'=>$userid,

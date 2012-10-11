@@ -8,4 +8,6 @@ return array (
   5 => 'hottopic',
   6 => 'newgroup',
   7 => 'links',
+  8 => 'article',
+  9 => 'activeusers',
 );

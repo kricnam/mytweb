@@ -26,7 +26,7 @@ return array(
 	//软件信息
 	'info'=>array(
 		'name'	=>	'ThinkSAAS',
-		'version'	=>	'1.85.20120818',
+		'version'	=>	'1.85.20120910',
 		'url'		=>	'http://www.thinksaas.cn/',
 		'email'	=>	'thinksaas@qq.com',
 		'copyright' =>	'ThinkSAAS',

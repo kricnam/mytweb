@@ -587,8 +587,8 @@ function tsXimg($file, $app , $w, $h,$path='',$c='0'){
 		$cpath = 'cache/'.$app.'/'.$path.'/'.$w.'/'.$name;
 	}
 	
-	
-	if(!is_file($cpath)){
+	unlink($cpath);
+	if(!is_file($cpath)){	
 		createFolders('cache/'.$app.'/'.$path.'/'.$w);
 		$dest = 'uploadfile/'.$app.'/'.$file;
 		$arrImg = getimagesize($dest);
@@ -1181,25 +1181,137 @@ function Add_S(&$array){
 function textfilter($text){
 	$words = fileRead('data/system_anti_word.php');
 	
-	//第一过滤层
+	//第一过滤层，大致的扫一下
 	if($text){
-		preg_match("/$words/i",$text, $matche);
-		if(!empty($matche[0])){
+		preg_match("/$words/i",$text, $matche1);
+		if(!empty($matche1[0])){
 			tsNotice('你在制造垃圾吗？');
 		}
 	}
 	
 	//第二过滤层
-	preg_match("/$words/i",t($text), $matche);
-	if(!empty($matche[0])){
+	preg_match("/$words/i",t($text), $matche2);
+	if(!empty($matche2[0])){
 		tsNotice('你在制造垃圾吗？');
 	}
 	
 	//第三过滤层，滤中文中的特殊字符
-	$text = preg_replace("/[^\x{4e00}-\x{9fa5}]/iu",'',$text);
-	preg_match("/$words/i",t($text), $matches);
-	if(!empty($matches[0])){
+	$text3 = preg_replace("/[^\x{4e00}-\x{9fa5}]/iu",'',$text);
+	preg_match("/$words/i",t($text3), $matche3);
+	if(!empty($matche3[0])){
+		tsNotice('你在制造垃圾吗？');
+	}
+	
+	//第四过滤层，过滤QQ号，电话，妈的，老子就不信搞不死你
+	$text4 = preg_replace("/[^\d]/iu",'',$text);
+	preg_match("/$words/i",t($text4), $matche4);
+	if(!empty($matche4[0])){
 		tsNotice('你在制造垃圾吗？');
 	}
 	
 }
+
+//二进制上传
+function tsXupload($projectid,$dir,$type){
+
+	$menu2=intval($projectid/1000);
+	$menu1=intval($menu2/1000);
+	$path = $menu1.'/'.$menu2;
+	$dest_dir='uploadfile/'.$dir.'/'.$path;
+	createFolders($dest_dir);
+	
+	$name = $projectid.'.'.$type;//要生成的图片名字
+	
+	$dest=$dest_dir.'/'.$name;
+	
+	//先删除
+	unlink($dest);
+
+	$xmlstr =  $GLOBALS[HTTP_RAW_POST_DATA];
+	if(empty($xmlstr)) $xmlstr = file_get_contents('php://input');
+	$jpg = $xmlstr;//得到post过来的二进制原始数据
+	$file = fopen($dest,"w");//打开文件准备写入
+	fwrite($file,$jpg);//写入
+	fclose($file);//关闭
+	
+	chmod($dest, 0777);
+	
+	return array(
+		'name'=>$name,
+		'path'=>$path,
+		'url'=>$path.'/'.$name,
+		'type'=>$type,
+	);
+	
+}
+//editor Special info  to html
+function editor2html($str)
+{
+	global $db;
+	//匹配本地图片
+	preg_match_all('/\[(photo)=(\d+)\]/is', $str, $photos);
+	foreach ($photos[2] as $item) {
+		$strPhoto = aac('photo')->getPhotoForApp($item);
+		$str = str_replace("[photo={$item}]",'<a href="'.SITE_URL.'uploadfile/photo/'.$strPhoto['photourl'].'" target="_blank">
+		<img class="thumbnail" src="'.SITE_URL.tsXimg($strPhoto['photourl'],'photo','500','500',$strPhoto['path']).'" title="'.$strTopic['title'].$item.'" /></a>', $str);
+	}
+
+	//匹配附件
+	preg_match_all('/\[(attach)=(\d+)\]/is', $str, $attachs);
+	if($attachs[2]){
+		foreach ($attachs[2] as $aitem) {
+			$strAttach = aac('attach')->getOneAttach($aitem);
+			if($strAttach['isattach'] == '1'){
+				$str = str_replace("[attach={$aitem}]",'<span class="attach_down">附件下载：
+				<a href="'.SITE_URL.'index.php?app=attach&ac=ajax&ts=down&attachid='.$aitem.'" target="_blank">'.$strAttach["attachname"].'</a></span>', $str);
+			}else{
+				$str = str_replace("[attach={$aitem}]",'', $str);
+			}
+		}
+	}
+
+	$find = array("http://","-",'.',"/",'?','=','&');
+	$replace = array("",'_','','','','','');
+
+	preg_match_all('/\[(video)=(.*?)\]/is', $str, $video);
+	if($video[2]){
+		foreach ($video[2] as $aitem) {
+			//img play title
+			$arr = explode(',',$aitem);
+			$id = str_replace($find,$replace,$arr[0]);
+			$html = '<div id="img_'.$id.'"><a href="javascript:void(0)" onclick="showVideo(\''.$id.'\',\''.$arr[1].'\');"><img src="'.$arr[0].'"/></a></div>';
+			$html .= '<div id="play_'.$id.'" style="display:none">'.$arr['2'].' <a href="javascript:void(0)" onclick="showVideo(\''.$id.'\',\''.$arr[1].'\');">收起</a>
+			<div id="swf_'.$id.'"></div> </div>';
+			$str = str_replace("[video={$aitem}]",$html, $str);
+
+		}
+	}
+
+	preg_match_all('/\[(mp3)=(.*?)\]/is', $str, $music);
+	if($music[2]){
+		foreach ($music[2] as $aitem) {
+			//url title
+			$arr = explode(',',$aitem);
+			$id = str_replace($find,$replace,$arr[0]);
+
+			//$mp3flash = '<div id="mp3img_'.$id.'"><a href="javascript:void(0)" onclick="showMp3(\''.$id.'\',\''.$arr[1].'\');"><img src="'.SITE_URL.'public/flash/music.gif" /></a></div>';
+
+			$mp3flash ='<div id="mp3swf_'.$id.'" class="mp3player">
+			<div>'.$arr[1].' <a href="'.$aitem.'" target="_blank">下载</a> </div>
+			<object height="24" width="290" data="'.SITE_URL.'public/flash/player.swf" type="application/x-shockwave-flash">
+			<param value="'.SITE_URL.'public/flash/player.swf" name="movie"/>
+			<param value="autostart=no&bg=0xCDDFF3&leftbg=0x357DCE&lefticon=0xF2F2F2&rightbg=0xF06A51&rightbghover=0xAF2910&righticon=0xF2F2F2&righticonhover=0xFFFFFF&text=0x357DCE&slider=0x357DCE&track=0xFFFFFF&border=0xFFFFFF&loader=0xAF2910&soundFile='.$aitem.'" name="FlashVars"/>
+			<param value="high" name="quality"/>
+			<param value="false" name="menu"/>
+			<param value="#FFFFFF" name="bgcolor"/>
+			</object></div>';
+			$str = str_replace("[mp3={$aitem}]",$mp3flash, $str);
+
+
+		}
+	}
+	return $str;
+	unset($db);
+}
+
+//ThinkSAAS Notice

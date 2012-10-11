@@ -11,8 +11,11 @@
 {if  $app=='home' && $ac=='index'}
 <meta name="keywords" content="{$TS_SITE[base][site_key]}" /> 
 <meta name="description" content="{$TS_SITE[base][site_desc]}" /> 
+{else}
+<meta name="keywords" content="{if $sitekey}{$sitekey}{else}{$title}{/if}" /> 
+<meta name="description" content="{if $sitedesc}{$sitedesc}{else}{$title}{/if}" /> 
 {/if}
-<link rel="shortcut icon" href="{SITE_URL}public/images/favicon.png" />
+<link rel="shortcut icon" href="{SITE_URL}favicon.ico" />
 {if is_file('theme/'.$site_theme.'/base.css')}
 <link rel="stylesheet" type="text/css" href="{SITE_URL}theme/{$site_theme}/base.css" id="thems">
 {/if}
@@ -30,12 +33,9 @@
 <div class="header">
 <div class="hc">
 <div class="left">
-<a class="logo" href="{SITE_URL}"></a></div>
+<a class="logo" href="{SITE_URL}" title="{$TS_SITE[base][site_title]}"></a></div>
 <div class="nav">
 <ul>
-<li><a href="{SITE_URL}">{php echo L::public_home}</a></li>
-{php doAction('pub_header_nav')}
-<li><a href="{SITE_URL}{tsUrl('group','explore')}">{php echo L::public_explore}</a></li>
 </ul>
 </div>
 
@@ -59,8 +59,6 @@
   <a href="{SITE_URL}{tsUrl('user','login',array(ts=>out))}">{php echo L::public_logout}</a>
 {/if}
 
-| <a href="{SITE_URL}{tsUrl('home','theme')}">{php echo L::public_theme}</a>
-
 {if $TS_USER['user']['isadmin']=='1'}
 |  <a target="_blank" href="{SITE_URL}index.php?app=system">{php echo L::public_manage}</a>
 {/if}
@@ -71,7 +69,7 @@
 <input type="hidden" name="app" value="search" />
 <input type="hidden" name="ac" value="s" />
 <div class="search_input">
-<input id="searchkw" name="kw" value="小组、话题、用户" />
+<input id="searchkw" name="kw" value="课程、小组、用户" />
 </div>
 <a onclick="searchon()" style="background-position: -157px 0px;">搜索</a>
 <span style="display:none;"><input id="searchto" type="submit" value="搜索" /></span>
@@ -80,19 +78,20 @@
 
 </div>
 </div>
-{if is_array($TS_SITE[appnav]) && $TS_SITE[appnav][$app] !=''}
+{if is_array($TS_SITE[appnav])}
 <div class="appnav">
 <ul>
 {loop $TS_SITE[appnav] $key $item}
+{if $key=='message'}
+{elseif $key=='home' }
+<li {if $app==$key}class="select"{/if}>
+<a href="{SITE_URL}">{$item}</a>
+{else}
 <li {if $app==$key}class="select"{/if}>
 <a href="{SITE_URL}{tsUrl($key)}">{$item}</a>
-{if $key=='ask' && $app!=$key}<span class="hot"></span>{/if}
-{if $key=='market' && $app!=$key}<span class="new"></span>{/if}
-{if $key=='study' && $app!=$key}<span class="hot"></span>{/if}
-</li>
+{if $key=='study' && $app!=$key}<span class="hot"></span>{/if}</li>
+{/if}
 {/loop}
-<li><a href="{SITE_URL}{tsUrl('home','apps')}">{php echo L::public_moreapps}</a></li>
-<li style="float:right;"><a target="_blank" href="http://www.thinksaas.cn/service/">订制开发</a></li>
 </ul>
 </div>
 {/if}
