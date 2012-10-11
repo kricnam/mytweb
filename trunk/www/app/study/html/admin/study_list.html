@@ -1,0 +1,40 @@
+{php include template("admin/header");}
+
+<!--main-->
+<div class="midder">
+
+{php include template("admin/menu");}
+
+<div class="page">{$pageUrl}</div>
+
+<table>
+<tr class="old"><td width="100">ID</td><td>课程标题</td><td>操作</td></tr>
+
+{loop $arrStudy $key $item}
+<tr>
+   <td>{$item[studyid]}</td><td><a target="_blank" href="{SITE_URL}index.php?app=study&ac=show&studyid={$item[studyid]}">{$item[title]}</a></td>
+   <td>
+   	   <a href="{SITE_URL}index.php?app=study&ac=admin&mg=study&ts=isaudit&studyid={$item[studyid]}">
+	   <!--{if $item[isaudit] == 0}-->
+       <font color="red">[审核]</font>
+	   <!--{else}-->[撤销审核]
+	   <!--{/if}-->
+	   </a>
+	   
+	   <a href="{SITE_URL}index.php?app=study&ac=admin&mg=study&ts=isrecommend&studyid={$item[studyid]}">
+	   <!--{if $item[isrecommend]=='0'}-->
+	   <font color="red">[推荐]</font>
+	   <!--{else}-->[取消推荐]
+	   <!--{/if}-->
+	   </a>
+	    <a href="{SITE_URL}index.php?app=study&ac=edit&ts=base&studyid={$item[studyid]}">[修改]</a> 
+	    <a href="{SITE_URL}index.php?app=study&ac=admin&mg=study&ts=del&studyid={$item[studyid]}">[删除]</a>
+   </td>
+</tr>
+{/loop}
+
+</table>
+
+</div>
+
+{php include template("admin/footer");}

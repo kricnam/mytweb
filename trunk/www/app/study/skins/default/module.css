@@ -1,0 +1,16 @@
+@charset "utf-8";
+/* 说明： 购物党前台
+ * 开发时间： 2012-08-12
+ * 开发者： merry   
+ * 版本时间： 2012-08-12
+ * 注意事项： 布局样式,所有布局样式将在这里定义,请勿轻易修改
+ */
+body{text-align:left; font-family:"微软雅黑", "Arial", "宋体";font-size:12px;line-height:20px;color:#333;}
+.topMenu{line-height:24px;height:24px;padding:3px 0;background:#3A3A3A;border-bottom:1px solid #eaeaea;position:relative;z-index:113;}
+.topMenu a:hover{color:#ff9000}
+.layer_wrap,.contener{width:1200px;margin:0 auto;}
+.footer .layer_wrap{width:1200px;margin:0 auto;}
+.header{z-index:111; position:relative}
+.footer .layer_wrap{line-height:20px;padding-top:25px;margin-top:15px;padding-bottom:15px;}
+.footer{background:#3A3A3A;color:#959595}
+.footer a:hover{color:#ff9000}

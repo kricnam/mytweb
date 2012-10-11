@@ -1,0 +1,31 @@
+.popBox_load{padding:10px; border-radius:5px 5px 5px 5px;background:#999;background: rgba(153, 153, 153, 0.6); position:absolute;top:50%;left:50%; z-index:999; display:none}
+.popBox_load .hd{background:#3a3a3a;padding:13px 15px 13px 20px;}
+.popBox_load .bd{background:#fff;border-radius:0px 0px 5px 5px;}
+.icon_pop{background:url(../images/ICON_POP.gif) no-repeat;display:inline-block;}
+.icon_close{width:18px;background-position:-4px -4px;}
+.icon_close:hover{background-position:-27px 0; text-decoration:none}
+.loadL{width:442px;border-right:1px solid #dbdbdb;padding:5px 0 10px 0;}
+.inp2{width:220px;height:15px;line-height:15px;padding:7px 3px;border:1px solid #cecece;}
+.hover .inp2{border-color:#3a3a3a;}
+.table1 th,.table1 td{padding-top:15px;}
+.table1 th{font-size:14px;color:#333; text-align:right;padding-right:8px;}
+.w-124{width:124px;}
+.btn56{width:56px;height:27px;background-position:0 -240px; color:#fff; font-size:14px; padding-bottom:3px;}
+.loadR{width:209px;padding:25px 25px 0 25px;}
+.noticebox_losd{background:#fff6ed;line-height:21px;padding:20px 13px;}
+.login_style a{display:inline-block;width:72px;line-height:24px;padding:3px 0 3px 9px;border:1px solid #bdbdbd;border-radius:3px 3px 3px 3px;margin-right:16px;margin-bottom:7px;}
+.login_style a:hover{ border-color:#F00; text-decoration:none}
+.login_style a i{margin-right:5px;}
+.loadL1{width:340px;border-right:1px solid #dbdbdb;padding:5px 0 14px 0;}
+.huicd{color:#cdcdcd}
+.pop_right{width:16px; background-position:-1px -36px;}
+.pop_wrong{width:16px; background-position:-30px -36px;}
+/*tinybox*/
+#mask{position:absolute;  z-index:998;background:#000;filter:alpha(opacity=60); -moz-opacity:0.6; opacity: 0.6;left:0;top:0;display:none}
+/*manjian*/
+.manjian{padding:10px 11px; font-family:"宋体", Verdana, Arial}
+.manjianList1 li{float:left; display:inline;width:157px;padding:7px 0;margin-left:10px;}
+.manjianList1 li.first{margin-left:0}
+.inp3{width:52px;height:15px; line-height:15px; padding:5px 0;border:1px solid #c2c2c2; vertical-align:middle}
+.btnWrap{line-height:27px;}
+.btn_cd{ display:inline-block;width:82px;height:27px;color:#fff; background:#ff9000; -moz-border-radius: 3px;          -webkit-border-radius:3px;border-radius:3px;}
