@@ -1,41 +1,21 @@
 <?php
 defined('IN_TS') or die('Access Denied.');
-
+$userid = intval($_GET['id']);
 //用户空间
 include 'userinfo.php';
 
-
-//Feed
-$arrFeeds = $db->fetch_all_assoc("select * from ".dbprefix."feed where `userid`='$userid' order by addtime desc limit 10");
-
-foreach($arrFeeds as $key=>$item){
-
-	$data = unserialize(stripslashes($item['data']));
-	
-	if(is_array($data)){
-		foreach($data as $key=>$itemTmp){
-			$tmpkey = '{'.$key.'}';
-			$tmpdata[$tmpkey] = $itemTmp;
-		}
-	}
-	
-	$arrFeed[] = array(
-		'user'	=> aac('user')->getOneUser($item['userid']),
-		'content' => strtr($item['template'],$tmpdata),
-		'addtime' => $item['addtime'],
-	);
-	
+//课程信息
+$arrStudys = $db->fetch_all_assoc("select studyid from ".dbprefix."study where userid=".$userid." limit 0,6");
+//var_export($arrStudys);
+foreach($arrStudys as $item){
+	$arrStudy[] = $new['user']->getStudyByStudyid($item['studyid']);
 }
 
-//留言
-$arrGuests = $new['user']->findAll('user_gb',array(
-	'touserid'=>$strUser['userid'],
-),'addtime desc',null,10);
-
-foreach($arrGuests as $key=>$item){
-	$arrGuest[] = $item;
-	$arrGuest[$key]['user']=$new['user']->getOneUser($item['userid']);
+$arrStudysJ = $db->fetch_all_assoc("select studyid  from ".dbprefix."study_users where status=0 and userid='".$userid."' limit 0,6");
+//var_export($arrStudys);
+foreach($arrStudysJ as $item){
+	$arrStudyJ[] = $new['user']->getStudyByStudyid($item['studyid']);
 }
 
-$title = $strUser['username'].'的个人空间';
+$title = $strUser['username'].'的个人主页';
 include template("space");

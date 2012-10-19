@@ -7,13 +7,13 @@ return array (
     array (
       'typeid' => '1',
       'typename' => '公开课',
-      'count_study' => '1',
+      'count_study' => '2',
     ),
     1 => 
     array (
       'typeid' => '2',
       'typename' => '职业认证',
-      'count_study' => '1',
+      'count_study' => '0',
     ),
     2 => 
     array (

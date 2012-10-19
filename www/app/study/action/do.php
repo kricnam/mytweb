@@ -1,5 +1,6 @@
 <?php
 defined('IN_TS') or die('Access Denied.');
+$nowtime = date("Y-m-d H:i");
 	switch($ts){
 		//上传教师图片
 		case "pic":
@@ -33,12 +34,27 @@ defined('IN_TS') or die('Access Denied.');
 			$class_end_time = $_POST['class_end_time'];
 			$pnum = $_POST['pnum'];
 			$date_start = $_POST['date_start'];
-			$avgprice = $_POST['time_start'];
+			$time_start = $_POST['time_start'];
 			$time_end = $_POST['time_end'];
 			$Arrtime = array();
-// 			if($title==''||$class_end_time=='' || $content==''||$avgprice==''||$pnum==''){
-// 				qiMsg("课程信息填写不完全！");
-// 			}		
+ 			//计算录入最小的时间
+ 			$timearr = array();
+ 			foreach ($date_start as $k => $r) {
+ 				if(!empty($date_start[$k])&&!empty($time_start[$k])&&!empty($time_end[$k]))
+ 				$timearr[$k] = $date_start[$k]." ".$time_start[$k];
+ 			}
+			foreach($timearr as $k=>$v){
+		  	 if( $k== 0  && $v !='' ){
+			     $min = $v;
+			     $max = $v;
+			 }elseif( $v !='' ) {
+			      $min = min($min,$v);
+			      $max = max($max,$v);
+			 }
+		     }
+		    if($class_end_time>$max)
+		     	qiMsg("课程报名截止时间不可以早于课程开始时间！");
+		     
 			$studyData = array(
 					'userid' => $userid,
 					'title'	=> $title,
@@ -58,6 +74,7 @@ defined('IN_TS') or die('Access Denied.');
 			
 			//时间表插入
 			foreach ($date_start as $k => $r) {
+				if(!empty($date_start[$k])&&!empty($time_start[$k])&&!empty($time_end[$k]))
 				$Arrtime = array(
 						'userid' => $userid,
 						'studyid'=> $studyid,
@@ -91,23 +108,25 @@ defined('IN_TS') or die('Access Denied.');
 				$studyid = $_POST['studyid1'];
 				$teachername  = h($_POST['teachername']);	
 				$teachercontent = trim($_POST['teachercontent']);
+				if($teachercontent==''){
+				   qiMsg("详细介绍不能为空！");
+				}
                 $db->query("update ".dbprefix."study set `teachername`='$teachername',`teachercontent`='$teachercontent' where studyid='$studyid'");			
-                //更新统计课程分类缓存
-                $arrTypess = $db->fetch_all_assoc("select * from ".dbprefix."study_type");
-                foreach($arrTypess as $key=>$item){
-                	$study = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study where typeid='".$item['typeid']."'");
-                	$arrTypes['list'][] = array(
-                			'typeid'	=> $item['typeid'],
-                			'typename'	=> $item['typename'],
-                			'count_study'	=> $study['count(studyid)'],
-                	);
-                }
-                
-                $studyNum = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study");
-                $arrTypes['count'] = $studyNum['count(studyid)'];               
-                //生成缓存文件
-                fileWrite('study_types.php','data',$arrTypes);
-                
+				//更新统计课程分类缓存
+				$arrTypess = $db->fetch_all_assoc("select * from ".dbprefix."study_type");
+				foreach($arrTypess as $key=>$item){
+					$study = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study where isaudit=1 AND class_end_time>'".$nowtime."' and typeid='".$item['typeid']."'");
+					$arrTypes['list'][] = array(
+							'typeid'	=> $item['typeid'],
+							'typename'	=> $item['typename'],
+							'count_study'	=> $study['count(studyid)'],
+					);
+				}
+				$studyNum = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study  where isaudit=1 AND class_end_time>'".$nowtime."'");
+				$arrTypes['count'] = $studyNum['count(studyid)'];
+				//生成缓存文件
+				fileWrite('study_types.php','data',$arrTypes);
+             
                 header("Location: ".SITE_URL.tsUrl('study','add_2',array('studyid'=>$studyid)));		
 		 break;
 			
@@ -272,15 +291,93 @@ defined('IN_TS') or die('Access Denied.');
 			}	
 			break;
 			
-		//推荐活动,取消推荐 
-		case "recommend":
+		case "del":
+			$record= intval($_GET['record']);   
 			$studyid = intval($_GET['studyid']);
-			$isrecommend = intval($_GET['isrecommend']);
+			$db->query("DELETE FROM ".dbprefix."study WHERE studyid = '$studyid'");
+			$db->query("DELETE FROM ".dbprefix."study_time WHERE studyid = '$studyid'");
+			$db->query("DELETE FROM ".dbprefix."study_users WHERE studyid = '$studyid'");
+			$db->query("DELETE FROM ".dbprefix."study_comment WHERE studyid = '$studyid'");
+			$db->query("DELETE FROM ".dbprefix."study_group_index WHERE studyid = '$studyid'");
+			$db->query("DELETE FROM ".dbprefix."tag_study_index WHERE studyid = '$studyid'");
+			$arrTypess = $db->fetch_all_assoc("select * from ".dbprefix."study_type");
+			//更新统计课程分类缓存
+			$arrTypess = $db->fetch_all_assoc("select * from ".dbprefix."study_type");
+			foreach($arrTypess as $key=>$item){
+				$study = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study where isaudit=1 AND class_end_time>'".$nowtime."' and typeid='".$item['typeid']."'");
+				$arrTypes['list'][] = array(
+						'typeid'	=> $item['typeid'],
+						'typename'	=> $item['typename'],
+						'count_study'	=> $study['count(studyid)'],
+				);
+			}
+			$studyNum = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study  where isaudit=1 AND class_end_time>'".$nowtime."'");
+			$arrTypes['count'] = $studyNum['count(studyid)'];
+			//生成缓存文件
+			fileWrite('study_types.php','data',$arrTypes);
+			if($record==1)
+			  header("Location: ".SITE_URL."index.php?app=study");
+			else
+			  qiMsg("课程删除成功！");
+		
+			break;
+		
+	    //审核课程
+		case "isaudit":
+			$studyid = $_GET['studyid'];
 			
-			$db->query("update ".dbprefix."study set `isrecommend`='$isrecommend' where `studyid`='$studyid'");
+			$strStudy = $db->once_fetch_assoc("select studyid,userid,title,isaudit from ".dbprefix."study where studyid='$studyid'");
 			
+			if($strStudy['isaudit'] == 0){
+			$db->query("update ".dbprefix."study set `isaudit`='1' where studyid='$studyid'");
+			//发送系统消息(审核通过)
+			$msg_userid = '0';
+			$msg_touserid = $strStudy['userid'];
+			$msg_content = '恭喜你，你申请的课程《'.$strStudy['title'].'》审核通过！快去看看吧<br />'.SITE_URL.tsUrl('study','show',array('studyid'=>$studyid));
+			aac('message')->sendmsg($msg_userid,$msg_touserid,$msg_content);
+			}else{
+				
+				$db->query("update ".dbprefix."study set `isaudit`='0' where studyid='$studyid'");
+				
+			}
+			//更新统计课程分类缓存
+			$arrTypess = $db->fetch_all_assoc("select * from ".dbprefix."study_type");
+			foreach($arrTypess as $key=>$item){
+				$study = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study where isaudit=1 AND class_end_time>'".$nowtime."' and typeid='".$item['typeid']."'");
+				$arrTypes['list'][] = array(
+						'typeid'	=> $item['typeid'],
+						'typename'	=> $item['typename'],
+						'count_study'	=> $study['count(studyid)'],
+				);
+			}
+			$studyNum = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study  where isaudit=1 AND class_end_time>'".$nowtime."'");
+			$arrTypes['count'] = $studyNum['count(studyid)'];
+			//生成缓存文件
+			fileWrite('study_types.php','data',$arrTypes);
+			qiMsg("操作成功！");	
+			break;
+					
+		//推荐课程
+		case "isrecommend":
+			$studyid = $_GET['studyid'];
+		
+			$strStudy = $db->once_fetch_assoc("select studyid,userid,title,isrecommend from ".dbprefix."study where studyid='$studyid'");
+		
+			if($strStudy['isrecommend'] == 0){
+				$db->query("update ".dbprefix."study set `isrecommend`='1' where studyid='$studyid'");
+				$db->query("update ".dbprefix."study set `addtime`='".time()."' where studyid='$studyid'");
+				//发送系统消息(推荐通过)
+				$msg_userid = '0';
+				$msg_touserid = $strStudy['userid'];
+				$msg_content = '恭喜你，你的课程《'.$strStudy['title'].'》被推荐啦！快去看看吧<br />'.SITE_URL.tsUrl('study','show',array('studyid'=>$studyid));
+				aac('message')->sendmsg($msg_userid,$msg_touserid,$msg_content);
+		
+			}else{
+		
+				$db->query("update ".dbprefix."study set `isrecommend`='0' where studyid='$studyid'");
+		
+			}	
 			qiMsg("操作成功！");
-			
 			break;
 			
 	}

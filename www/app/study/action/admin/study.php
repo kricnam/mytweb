@@ -1,5 +1,5 @@
 <?php 
-
+$nowtime = date("Y-m-d H:i");
 switch($ts){
 	case "list":		
 		$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -22,19 +22,18 @@ switch($ts){
 		$db->query("DELETE FROM ".dbprefix."study_comment WHERE studyid = '$studyid'");
 		$db->query("DELETE FROM ".dbprefix."study_group_index WHERE studyid = '$studyid'");
 		$db->query("DELETE FROM ".dbprefix."tag_study_index WHERE studyid = '$studyid'");
+		//更新统计课程分类缓存
 		$arrTypess = $db->fetch_all_assoc("select * from ".dbprefix."study_type");
 		foreach($arrTypess as $key=>$item){
-			$study = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study where typeid='".$item['typeid']."'");
+			$study = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study where isaudit=1 AND class_end_time>'".$nowtime."' and typeid='".$item['typeid']."'");
 			$arrTypes['list'][] = array(
 					'typeid'	=> $item['typeid'],
 					'typename'	=> $item['typename'],
 					'count_study'	=> $study['count(studyid)'],
 			);
 		}
-		
-		$studyNum = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study");
+		$studyNum = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study  where isaudit=1 AND class_end_time>'".$nowtime."'");
 		$arrTypes['count'] = $studyNum['count(studyid)'];
-		
 		//生成缓存文件
 		fileWrite('study_types.php','data',$arrTypes);
 		if($record==1)
@@ -62,6 +61,20 @@ switch($ts){
 			$db->query("update ".dbprefix."study set `isaudit`='0' where studyid='$studyid'");
 			
 		}
+		//更新统计课程分类缓存
+		$arrTypess = $db->fetch_all_assoc("select * from ".dbprefix."study_type");
+		foreach($arrTypess as $key=>$item){
+			$study = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study where isaudit=1 AND class_end_time>'".$nowtime."' and typeid='".$item['typeid']."'");
+			$arrTypes['list'][] = array(
+					'typeid'	=> $item['typeid'],
+					'typename'	=> $item['typename'],
+					'count_study'	=> $study['count(studyid)'],
+			);
+		}
+		$studyNum = $db->once_fetch_assoc("select count(studyid) from ".dbprefix."study  where isaudit=1 AND class_end_time>'".$nowtime."'");
+		$arrTypes['count'] = $studyNum['count(studyid)'];
+		//生成缓存文件
+		fileWrite('study_types.php','data',$arrTypes);
 		qiMsg("操作成功！");	
 		break;
 				
@@ -73,6 +86,7 @@ switch($ts){
 	
 		if($strStudy['isrecommend'] == 0){
 			$db->query("update ".dbprefix."study set `isrecommend`='1' where studyid='$studyid'");
+			$db->query("update ".dbprefix."study set `addtime`='".time()."' where studyid='$studyid'");
 			//发送系统消息(推荐通过)
 			$msg_userid = '0';
 			$msg_touserid = $strStudy['userid'];

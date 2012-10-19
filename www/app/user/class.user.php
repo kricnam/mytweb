@@ -113,7 +113,50 @@ class user extends tsApp{
 			}
 		}
 	}
+	//通过topicid获取课程基本信息
+	function getStudyByStudyid($studyid){
+		$strStudy = $this->db->once_fetch_assoc("select * from ".dbprefix."study where studyid='$studyid'  order by addtime desc");
 	
+		//用户
+		$strStudy['user'] = $this->db->once_fetch_assoc("select * from ".dbprefix."user_info where userid='".$strStudy['userid']."'");
+	
+		//时间
+		$weekarray=array("周日","周一","周二","周三","周四","周五","周六");
+		$time = $this->db->fetch_all_assoc("select * from ".dbprefix."study_time where studyid='".$studyid."' order by s_date asc,s_time asc limit 0,1");
+		if(is_array($time)){
+			foreach($time as $key=>$item){
+				$a = date('m',strtotime($item['s_date'])).'月'.date('d',strtotime($item['s_date'])).'日 '.$weekarray[date("w",strtotime($item['s_date']))].' '.date('H:i',strtotime($item['s_time'])).'-'.date('H:i',strtotime($item['e_time']));
+				$b.= $a."<br>";
+			}
+		}
+	
+		$strStudy['time']=$b;
+	
+		//地点
+		$province= $this->db->once_fetch_assoc("select * from ".dbprefix."area_province where provinceid='".$strStudy['provinceid']."'");
+		$city = $this->db->once_fetch_assoc("select * from ".dbprefix."area_city  where cityid='".$strStudy['cityid']."'");
+		$area = $this->db->once_fetch_assoc("select * from ".dbprefix."area where areaid='".$strStudy['areaid']."'");
+		$strStudy['address']=$province['province']."&nbsp;".$city['city']."&nbsp;".$area['area']."&nbsp;".$strStudy['address'];
+	
+		//活动类型
+		$strStudy['type'] = $this->db->once_fetch_assoc("select * from ".dbprefix."study_type where typeid='".$strStudy['typeid']."'");
+	
+		return $strStudy;
+	}
+	function getStudysByUserid($page = 1, $prePageNum,$userid){
+		$start_limit = !empty($page) ? ($page - 1) * $prePageNum : 0;
+		$limit = $prePageNum ? "LIMIT $start_limit, $prePageNum" : '';
+		$arrStudyContentComment	=
+		$this->db->fetch_all_assoc("select distinct studyid from ".dbprefix."study where userid=".$userid." ".$limit);
+		return $arrStudyContentComment;
+	}
+	function getStudysByUseridJ($page = 1, $prePageNum,$userid){
+		$start_limit = !empty($page) ? ($page - 1) * $prePageNum : 0;
+		$limit = $prePageNum ? "LIMIT $start_limit, $prePageNum" : '';
+		$arrStudyContentComment	=
+		$this->db->fetch_all_assoc("select distinct studyid from ".dbprefix."study_users where status=0 and userid=".$userid." ".$limit);
+		return $arrStudyContentComment;
+	}
 	//析构函数
 	public function __destruct(){
 		
