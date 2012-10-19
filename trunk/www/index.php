@@ -17,9 +17,7 @@ define('THINKINSTALL',THINKROOT.'/install');
 define('THINKPLUGIN',THINKROOT.'/plugins');
 
 //装载ThinkSAAS核心
-
 include 'thinksaas/thinksaas.php';
-
 //装载APP应用
 include 'app/index.php';
 

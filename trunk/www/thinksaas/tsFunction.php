@@ -1244,6 +1244,27 @@ function tsXupload($projectid,$dir,$type){
 	);
 	
 }
+//url filter
+function get_url_query($url_args=array(),$filters=array()){
+		if(count($filters) > 0){
+			foreach($filters as $item){
+				if(array_key_exists($item, $url_args)){
+					unset($url_args[$item]);
+				}
+			}
+		}
+// 		$tmp_kv = array();
+// 		foreach($url_args as $k=>$v){
+// 			if(isset($v)){
+// 				$tmp_kv [] = $k.'='.$v;
+// 			}
+// 		}
+// 		$res_str = $base_url . implode("&", $tmp_kv);
+// 		if(substr($res_str,-1) == '?'){
+// 			$res_str = substr($res_str, 0, strlen($res_str)-1);
+// 		}
+		return $url_args;
+}
 //editor Special info  to html
 function editor2html($str)
 {

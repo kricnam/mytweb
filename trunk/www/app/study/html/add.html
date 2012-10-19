@@ -69,9 +69,9 @@ $(document).ready(function(){
 	 $("#btn-cancel"+h).bind("click",function(){$(this).parent().remove();});
 	 });
       //form 验证开始
-      $.formValidator.initConfig({formID:"form1",theme:"ArrowSolidBox",mode:'AutoTip', onError:function(msg,obj,errorlist){$("#errorlist").empty();$.map(errorlist,function(msg){$("#errorlist").append("<li>" + msg + "</li>")});}});
-     // $("#bbcode").formValidator({onShow:"请输入你的描述",onFocus:"描述至少要输入10个汉字或20个字符",onCorrect:"恭喜你,你输对了"}).inputValidator({min:20,onError:"你输入的描述长度不正确,请确认"});
-      $("#title").formValidator({onShow:"请输入课程名称",onFocus:"课程名称至少要输入5个汉字或10个字符",onCorrect:"恭喜你,你输对了"}).inputValidator({min:10,onError:"你输入的课程名称长度不正确,请确认"});
+      $.formValidator.initConfig({formID:"form1",theme:"ArrowSolidBox",mode:'AutoTip', onError:function(msg,obj,errorlist){$("#errorlist").empty();$.map(errorlist,function(msg){});}});
+      //$("#bbcodem").formValidator({onShow:"请输入你的描述",onFocus:"描述至少要输入2个汉字或4个字符",onCorrect:"恭喜你,你输对了"}).inputValidator({min:4,onError:"你输入的描述长度不正确,请确认"});
+      $("#title").formValidator({onShow:"请输入课程名称",onFocus:"课程名称至少要输入2个汉字或4个字符",onCorrect:"恭喜你,你输对了"}).inputValidator({min:4,onError:"你输入的课程名称长度不正确,请确认"});
       $("#date_start0").formValidator({relativeID:"es0",onShow:"请选择日期",onFocus:"请选择日期",onCorrect:"恭喜你,你输对了"}).inputValidator({min:1,onError:"日期不能为空，请确认"});
       $("#ts0").formValidator({relativeID:"es0",onShowText:"开始时间",onShow:"请选择开始时间",onFocus:"请选择开始时间",onCorrect:"恭喜你,你输对了",defaultValue:"开始时间"}).inputValidator({min:1,onError:"请选择开始时间不能为空，请确认"});
       $("#es0").formValidator({relativeID:"es0",onShowText:"结束时间",onShow:"请选择结束时间",onFocus:"请选择结束时间",onCorrect:"恭喜你,你输对了",defaultValue:"结束时间"}).inputValidator({min:1,onError:"请选择结束时间不能为空，请确认"}).compareValidator({desID:"ts0",operateor:">",dataType:'time',onError:"结束时间需大于开始时间"});
@@ -103,7 +103,7 @@ $(document).ready(function(){
     <span class="pl">3、发布</span>
 </div>
 </h1>
-<span style="color:red;padding:10px;">(请认真填写课程时间、地点以及标签，后续不可修改)</span>
+<span style="color:red;padding:10px;">(请认真填写，后续不可更改)</span>
 <form  id="form1" method="POST" action="{SITE_URL}index.php?app=study&ac=do&ts=add" enctype="multipart/form-data">
 <table>
 <tbody>
@@ -121,24 +121,6 @@ $(document).ready(function(){
 	</select>
 	</td>
 </tr>
-
-<tr>
-	<td>*课程时间</td>	
-	<td>	
-	<input id="date_start0" name="date_start[]"  style="width:100px;height:18px" class="Wdate" readonly value="" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'{php echo date('Y-m-d')}',minDate:'{php echo date('Y-m-d',time()+0)}'})" />&nbsp;&nbsp;
-    <input id="ts0" name="time_start[]"  style="width:100px;height:18px" class="Wdate" readonly value="" onClick="WdatePicker({dateFmt:'HH:mm'})" /> &nbsp;至&nbsp;
-    <input id="es0" name="time_end[]"   style="width:100px;height:18px" class="Wdate" readonly  value="" onClick="WdatePicker({dateFmt:'HH:mm'})" />   
-    </td>
-</tr>
-<tr>
-    <td></td>
-	<td><div id='myTable'></div></td>
-</tr>
-<tr>
-	<td></td>
-	<td><img src='{SITE_URL}app/{$app}/skins/{$skin}/add.jpg'  class="newBtn" id="newBtn" name="newBtn"  onclick="" /></td>
-</tr>
-<!-- <input type='button' value="全部删除" id='delBtn' name='delBtn'  > -->
 
 <tr>
 	<td>*课程地点</td>
@@ -163,12 +145,29 @@ $(document).ready(function(){
 	<input style="width:200px;padding:0px"  id="address" name="address" value="详细地址"/>
 	</td>
 </tr>
-<tr><td valign="top">&nbsp;内容</td><td><textarea style="width:515px;height:300px;" id="bbcodem"  name="content"></textarea></td></tr>
+<tr><td valign="top">*内容</td><td><textarea style="width:515px;height:300px;" id="bbcodem" class="bbcodem_c" name="content"></textarea></td></tr>
 <tr><td>*标签</td><td><input style="padding:0px;width:300px;" id="tag" name="tag" /> (多个标签请用英文,号分开)</td></tr>
 <tr><td>*课程海报</td><td><input id="photo" type="file" name="photo" /> (仅支持jpg,gif,png)</td></tr>
 <tr><td>*人均费用</td><td><input style="padding:0;width:70px;" id="avgprice" name="avgprice"  onKeyup="this.value=this.value.replace(/[^\d\>\<]/g,'');" /> 元</td></tr>
-<tr><td>*截止时间	</td><td><input id="class_end_time" style="width:150px;height:18px"   name="class_end_time" readonly value="" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'{php echo date('Y-m-d')} 00:00'})" /></td></tr>
+<tr><td>*截止时间	</td><td><input id="class_end_time" style="width:150px;height:18px"   name="class_end_time" readonly value="" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'{php echo date('Y-m-d')} 00:00'})" />(课程报名截止时间不可以早于课程开始时间)</td></tr>
 <tr><td>*可容纳最多人数</td><td><input id="pnum" style="padding:0;width:70px;" name="pnum"  onKeyup="this.value=this.value.replace(/[^\d]/g,'');" /> 人</td></tr>
+<tr>
+	<td>*课程时间</td>	
+	<td>	
+	<input id="date_start0" name="date_start[]"  style="width:100px;height:18px" class="Wdate" readonly value="" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'{php echo date('Y-m-d')}',minDate:'{php echo date('Y-m-d',time()+0)}'})" />&nbsp;&nbsp;
+    <input id="ts0" name="time_start[]"  style="width:100px;height:18px" class="Wdate" readonly value="" onClick="WdatePicker({dateFmt:'HH:mm'})" /> &nbsp;至&nbsp;
+    <input id="es0" name="time_end[]"   style="width:100px;height:18px" class="Wdate" readonly  value="" onClick="WdatePicker({dateFmt:'HH:mm'})" />   
+    </td>
+</tr>
+<tr>
+    <td></td>
+	<td><div id='myTable'></div></td>
+</tr>
+<tr>
+	<td></td>
+	<td><img src='{SITE_URL}app/{$app}/skins/{$skin}/add.jpg'  class="newBtn" id="newBtn" name="newBtn"  onclick="" /></td>
+</tr>
+<!-- <input type='button' value="全部删除" id='delBtn' name='delBtn'  > -->
 <tr>
 	<td></td>
 	<td>

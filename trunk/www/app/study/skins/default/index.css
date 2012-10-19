@@ -100,7 +100,7 @@
 .article {
     float: left;
     padding-right: 10px;
-    width: 540px;
+    width: 420px;
 }
 #week_tab {
     margin-bottom: 20px;
@@ -231,7 +231,7 @@ h2.green_tab a.on span, .sort_tabs a.on span {
 
 .aside {
     float: right;
-    width: 230px;
+    width: 310px;
 }
 
 /**/

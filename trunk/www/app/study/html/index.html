@@ -1,29 +1,152 @@
 {template header}
 <link type="text/css" rel="stylesheet" href="{SITE_URL}app/{$app}/skins/{$skin}/index.css" />
 <script language="javascript" type="text/javascript" src="{SITE_URL}public/js/date/WdatePicker.js?4.72"></script>
+<script>
+var p ="{SITE_URL}{tsUrl('study','index',get_url_query($url_args, array('provinceid','cityid','areaid','page')))}";
+$(document).ready(function(){
+	$("#province").change(function(){
+		var provinceid=$(this).val();
+		window.location.href= p+"&provinceid="+provinceid;		
+	});	
+})
+ function selectArea(){
+	var cityid=$("#city").val();
+	var c ="{SITE_URL}{tsUrl('study','index',get_url_query($url_args, array('cityid','areaid','page')))}";
+	window.location.href= c+"&cityid="+cityid;		
+}
+ function selectP(){
+	var areaid=$("#area").val();
+	var a ="{SITE_URL}{tsUrl('study','index',get_url_query($url_args, array('areaid','page')))}";
+	window.location.href= a+"&areaid="+areaid;		
+}
+ function submit(){
+	 var date= $('#date').val();
+	 var dateurl ="{SITE_URL}{tsUrl('study','index',get_url_query($url_args, array('page','dateid','date')))}";
+	 window.location.href= dateurl+"&date="+date;		 
+ }
+
+</script>
+<style>
+.zoom {
+    overflow: hidden;
+}
+.choosedCon span {
+    background: none repeat scroll 0 0 #CC0000;
+    color: white;
+    cursor: pointer;
+    margin: 0 0 0 6px;
+    padding: 0 2px;
+    float: left;
+}
+.font14 {
+    font-size: 14px;
+}
+.fl {
+    display: inline;
+    float: left;
+}
+.choosedCon span a {
+    background-position: 0 -36px;
+    margin-left: 7px;
+    width: 11px;
+}
+.icon_form {
+    background: url("{SITE_URL}app/{$app}/skins/{$skin}/icon_form.gif") no-repeat scroll 0 0 transparent;
+    display: inline-block;
+}
+.tags{padding-top:30px;padding-right:2px;height:180px;}
+.tags ul{}
+.tags ul li{float:left;}
+.u17_container {
+    height: 60px;
+    position: absolute;
+    top: 335px;
+    width: 250px;
+}
+.u17_normal {
+    background-image: url("{SITE_URL}app/{$app}/skins/{$skin}/u17_normal.png");
+}
+#u17_img {
+    height: 26px;
+    position: absolute;
+    top: -3px;
+    width: 222px;
+    padding:20px;
+}
+</style>
 <div class="midder">
 <div class="mc">
-
-<div class="navs">
+<div class="navs" style="width: 180px;">
 	<div class="block_menu">
 	<em class="ft"></em><b class="ft"></b>
-	<ul>
+	<ul>	
 	<li class="clearfix" id="event_home"><a href="{SITE_URL}{tsUrl('study')}"><span>课程首页</span></a></li>
 	<div class="line"></div>
-	<li class="clearfix <!--{if $typeid==0}-->on<!--{/if}-->"><a href="{SITE_URL}{tsUrl('study','index',array(typeid=>0))}"><span>所有类型({$arrStudyType[count]})</span></a></li>
+	<li class="clearfix" id="event_home"><span style="font-size:14px; ">课程地点</span>  </li>
+	<li class="clearfix">
+	<select id="province" name="province">
+	<option value='0' >请选则省</option>
+	{loop $province $k $v}
+	<option value="{$v['provinceid']}">{$v['province']}</option>
+	{/loop}
+	</select>
+	</li>
+	<li class="clearfix">
+		<span id="citySpan">
+			<select id="city" name="city" onchange="selectArea()">
+				<option value="0">请选则市</option>
+				    <!--{if $provinceid!=0}-->
+					{loop $city $k $v}
+					<option value="{$v['cityid']}">{$v['city']}</option>
+					{/loop}
+					<!--{/if}-->
+			</select>
+		</span>
+	</li>
+	<li class="clearfix">
+		<span id="areaSpan">
+			<select id="area" name="area" onchange="selectP()">
+				<option value="0">请选则区</option>
+					<!--{if $cityid!=0}-->
+					{loop $area $k $v}
+					<option value="{$v['areaid']}">{$v['area']}</option>
+					{/loop}
+					<!--{/if}-->
+			</select>
+		</span>
+	</li>
+	<div class="line"></div>
+	<li class="clearfix" id="event_home"><span style="font-size:14px; ">类型</span>  </li>
+    {php  $Type_filter = get_url_query($url_args, array('page','typeid'));
+    }		
+	<li class="clearfix <!--{if $typeid==0}-->on<!--{/if}-->"><a href="{SITE_URL}{tsUrl('study','index',{$Type_filter})}"><span>全部类型({$arrStudyType[count]})</span></a></li>
 	<!--{loop $arrStudyType[list] $key $item}-->
-	<li class="clearfix <!--{if $typeid==$item[typeid]}-->on<!--{/if}-->"><a href="{SITE_URL}{tsUrl('study','index',array(typeid=>$item[typeid]))}"><span>{$item[typename]}({$item[count_study]})</span></a></li>
+	{php  $Type_url = array_merge($Type_filter,array(typeid=>$item[typeid]));
+          //echo var_export($Type_url);
+    }	
+	<li class="clearfix <!--{if $typeid==$item[typeid]}-->on<!--{/if}-->"><a href="{SITE_URL}{tsUrl('study','index',{$Type_url})}"><span>{$item[typename]}({$item[count_study]})</span></a></li>
 	<!--{/loop}-->
 	<div class="line"></div>
-	<li class="clearfix <!--{if $typeid==0}-->on<!--{/if}-->"><a href="{SITE_URL}{tsUrl('study','index',array(typeid=>0))}"><span>所有时间({$arrStudyType[count]})</span></a></li>
+	
+		
+	<li class="clearfix" id="event_home"><span style="font-size:14px; ">时间</span>  </li>
+	{php  $Date_filter = get_url_query($url_args, array('page','dateid','date'));
+    }	
+	<li class="clearfix <!--{if $dateid==0}-->on<!--{/if}-->"><a href="{SITE_URL}{tsUrl('study','index',{$Date_filter})}"><span>全部时间</span></a></li>
 	<!--{loop $_SCONFIG[date_range] $key $item}-->
-	<li class="clearfix <!--{if $typeid==$item[typeid]}-->on<!--{/if}-->"><a href="{SITE_URL}{tsUrl('study','index',array(typeid=>$item[typeid]))}"><span>{$item[price_desc]}</span></a></li>
+	{php  $Date_url = array_merge($Date_filter,array(dateid=>$key));
+    }
+	<li class="clearfix <!--{if $dateid==$key }-->on<!--{/if}-->"><a href="{SITE_URL}{tsUrl('study','index',{$Date_url})}"><span>{$item[date_desc]}</span></a></li>
 	<!--{/loop}-->
 	<li>
 	<table style="padding:0px;">
 	<tr>
-	<td style="padding:0px;"><input id="date" name="date"  style="width:80px;height:18px" class="Wdate" readonly value="" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})" /></td>
-	<td style="padding:0px;"><a href="#"><img style="padding-top:8px;  width="25" height="24"  src="{SITE_URL}app/{$app}/skins/{$skin}/search.jpg" /></a></td>
+
+	<td style="padding:0px;">
+	<input id="date" name="date"  style="width:100px;height:18px" class="Wdate" readonly value="" onClick="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
+	</td>
+	<td style="padding:0px;"><a href="javascript:submit();"><img style="padding-top:8px;  width="25" height="24"  src="{SITE_URL}app/{$app}/skins/{$skin}/search.jpg" /></a>
+	</td>
 	</tr>
 	</table>
 	</li>
@@ -42,10 +165,16 @@
 <div style="position: relative;">
 <div class="top-wp">
 <ul class="tabs">
-<li><a {if $ac=='topic'}class="current"{/if} href="{SITE_URL}{tsUrl('study')}"><span>即将截止</span></a></li>
-<li><a {if $ac==''}class="current"{/if} href="{SITE_URL}{tsUrl('study')}">热度</a></li>
-<li><a {if $ac=='photo'}class="current"{/if} href="{SITE_URL}{tsUrl('study')}"><span>价格</span></a></li>
-<li><a {if $ac=='index'}class="current"{/if} href="{SITE_URL}{tsUrl('study')}"><span>最新发布</span></a></li>
+{php   $Order_filter_a = get_url_query($url_args, array('page','orderby','order'));
+       $Order_url_1 = array_merge($Order_filter_a,array(orderby=>'order by class_end_time',order=>'asc'));
+       $Order_url_2 = array_merge($Order_filter_a,array(orderby=>'order by count_userdo desc,',order=>'count_userwish desc'));
+       $Order_url_3 = array_merge($Order_filter_a,array(orderby=>'order by avgprice',order=>'asc'));
+       $Order_url_4 = array_merge($Order_filter_a,array(orderby=>'order by addtime',order=>'desc'));
+}
+<li><a {if $orderby=='order by class_end_time'}class="current"{/if} href="{SITE_URL}{tsUrl('study','index',{$Order_url_1})}"><span>即将截止</span></a></li>
+<li><a {if $orderby=='order by count_userdo desc,'}class="current"{/if} href="{SITE_URL}{tsUrl('study','index',{$Order_url_2})}">热度</a></li>
+<li><a {if $orderby=='order by avgprice'}class="current"{/if} href="{SITE_URL}{tsUrl('study','index',{$Order_url_3})}"><span>价格</span></a></li>
+<li><a {if $orderby=='order by addtime'}class="current"{/if} href="{SITE_URL}{tsUrl('study','index',{$Order_url_4})}"><span>最新发布</span></a></li>
 <li style="float:right;"><a href="{SITE_URL}index.php?app=study&ac=add" >创建同城课程</a></li>
 </ul>
 </div>
@@ -53,15 +182,55 @@
 <!-- menu end-->
 <div class="clear"></div>
 	<div id="wt_0">
+	<div class="zoom choosedCon">
+		{php   $Type_filter_a = get_url_query($url_args, array('page','typeid'));
+		       $Date_filter_a = get_url_query($url_args, array('page','dateid','date'));
+		       $province_filter_a = get_url_query($url_args, array('page','provinceid','cityid','areaid'));
+		       $city_filter_a = get_url_query($url_args, array('page','cityid','areaid'));
+		       $area_filter_a = get_url_query($url_args, array('page','areaid'));
+	    }
+	    <!--{if $typeid!=0||$dateid!=0||$provinceid!=0||$cityid!=0||$areaid!=0||$date!=0}-->
+	    <b class="font14 fl">已选条件</b>
+	    <div>	    
+	    <!--{if $provinceid!=0||$cityid!=0||$areaid!=0}-->
+	    <span>地点：
+		<!--{loop $arrProvince $key $item}-->		
+		 <!--{if $item[$provinceid]!=''}-->
+		 {php echo $item[$provinceid]}<a class="icon_form" href="{SITE_URL}{tsUrl('study','index',{$province_filter_a})}">&nbsp;</a>
+		<!--{/if}-->
+		<!--{/loop}-->
+		<!--{loop $arrCity $key $item}-->
+		 <!--{if $item[$cityid]!=''}-->
+		 {php echo $item[$cityid]}<a class="icon_form" href="{SITE_URL}{tsUrl('study','index',{$city_filter_a})}">&nbsp;</a>
+		<!--{/if}-->
+		<!--{/loop}-->	
+		<!--{loop $arrArea $key $item}-->
+		 <!--{if $item[$areaid]!=''}-->
+		 {php echo $item[$areaid]}<a class="icon_form" href="{SITE_URL}{tsUrl('study','index',{$area_filter_a})}">&nbsp;</a>		 
+		<!--{/if}-->
+		<!--{/loop}-->
+		</span>
+	    <!--{/if}-->
+	    
+        <!--{if $typeid!=0}-->
+		<span>类型：{php echo $arrStudyType[list][($typeid-1)][typename];}<a class="icon_form" href="{SITE_URL}{tsUrl('study','index',{$Type_filter_a})}">&nbsp;</a></span>
+	    <!--{/if}-->
+	    <!--{if $dateid!=0||$date!=0}-->
+		<span>时间：<!--{if $date!=0}-->{php echo $date;}<!--{else}-->{php echo $_SCONFIG[date_range][$dateid][date_desc];}<!--{/if}--><a class="icon_form" href="{SITE_URL}{tsUrl('study','index',{$Date_filter_a})}">&nbsp;</a></span>
+	    <!--{/if}-->
+	     </div>
+        <!--{/if}-->
+	</div>    
 	<!--{if $arrStudy}-->
-	<div class="block_headerline">
+	<div class="block_headerline">	                                               
 	    <!--{loop $arrStudy $key $item}-->
+	    <!--{if $item['isaudit']==1||$TS_USER[user][userid] == $item['user']['userid']||$TS_USER[user][isadmin]=='1'}-->
 		<div class="nof clearfix">
 			<div class="evtlstimg">
 			<a href="{SITE_URL}{tsUrl('study','show',array(studyid=>$item[studyid]))}" class="phs_link">
 			<img src="<!--{if $item[poster]}-->{SITE_URL}{php echo tsXimg($item[poster],'study',100,100,$item[path],1)}<!--{else}-->{SITE_URL}public/images/event_dft.jpg<!--{/if}-->"></a>
 			</div>
-		    <h2><a  href="{SITE_URL}{tsUrl('study','show',array(studyid=>$item[studyid]))}">{$item[title]}</a> <span class="pl2">[{$item[type][typename]}]</span></h2>
+		    <h2 style="margin-bottom:0px;"><a  href="{SITE_URL}{tsUrl('study','show',array(studyid=>$item[studyid]))}">{$item[title]}</a> <span class="pl2">[{$item[type][typename]}]</span></h2>
 			<div class="intro">
 			<table style="margin-left:-5px">
 			<tr><td valign="top" style="padding-left: 5px;padding-right:0px;"><span class="pl">时间：</span></td><td valign="top">{$item[time]}</td></tr>
@@ -71,31 +240,50 @@
 			{$item[count_userdo]}人参加 &nbsp; {$item[count_userwish]}人感兴趣<br><br>
 			</div>
 		</div>
+		<!--{else}-->
+		<!--{/if}-->
 		<!--{/loop}-->
+		<div class="page">{$pageUrl}</div>
 	</div>
+	<!--{else}-->
+	 <div class="nof clearfix"><p align="center" style="color: red; font-size: 16px; line-height: 24px;">亲，找不到满足条件的课程，试试其他筛选条件吧</p></div>
 	<!--{/if}-->
-	<div class="page">{$pageUrl}</div>
 	</div>
 </div>
 <!--content end-->
-<!--
 <div class="aside">
-<div class="create-events">
-<a href="{SITE_URL}index.php?app=study&ac=add" class="bn-post">
-<span>创建同城课程</span>
-</a>
+	<div class="tags">
+	<ul>
+	<!--{loop $HotTagName $key $item}-->
+	<li><a class="post-tag" href="{SITE_URL}{tsUrl('study','index',array('tagid'=>$item[tagid]))}">{$item[tagname]}</a>×{$item[sum]}</li>
+	<!--{/loop}-->
+	</ul>
+	</div>
+    <div class="u17_container" id="u17">
+	<div class="u17_normal" id="u17_img">
+               如需帮助，请随时给我们留言：
+      support@tlaoshi.com
+    </div>
+	</div>
 </div>
 
-<h2>主办支持小组 &nbsp; ·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;
-</h2>
-{loop $arrGroup $key $item}
-<dl class="obu"><dt><a class="nbg" href="{SITE_URL}index.php/group/group/groupid-{$item[groupid]}"><img alt="{SITE_URL}{$item[groupname]}" class="m_sub_img" src="{$item[icon_48]}"></a></dt>
-<dd><a href="{SITE_URL}index.php/group/group/groupid-{$item[groupid]}">{$item[groupname]}</a></dd></dl>
-{/loop}
-<br clear="all">
-<br>
-</div>
--->
 </div>
 </div>
+<script>
+var p_id ="{$provinceid}";
+if(p_id!=0)	
+{	
+$("#province").val(p_id);
+}	
+var c_id ="{$cityid}";	
+if(c_id!=0)	
+{	
+$("#city").val(c_id);
+}
+var a_id ="{$areaid}";
+if(a_id!=0)	
+{	
+$("#area").val(a_id);
+}
+</script>
 {template footer}

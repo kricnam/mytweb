@@ -17,20 +17,20 @@
 <textarea style="width:100%;" name="content"></textarea>
 <br />
 <input type="hidden" name="touserid" value="{$strUser['userid']}" />
-<input class="submit" type="submit" value="添加留言" />
+<input class="submit" type="submit" value="娣诲姞鐣欒█" />
 </form>
 </div>
 {/if}
 <div class="clear"></div>
 
-<!--回复-->
+<!--鍥炲-->
 <div id="reguest" style="display:none;">
 <form method="post" action="{SITE_URL}index.php?app=user&ac=guestbook&ts=redo">
 <textarea style="width:100%" name="content"></textarea>
 <br />
 <input id="touserid" type="hidden" name="touserid" value="0" />
 <input id="reid" type="hidden" name="reid" value="0" />
-<input class="submit" type="submit" value="回复" />
+<input class="submit" type="submit" value="鍥炲" />
 </form>
 </div>
 
@@ -45,10 +45,10 @@
 {php echo nl2br(htmlspecialchars($item['content']))}
 <p style="text-align:right">
 {if intval($TS_USER['user']['userid'] == $strUser['userid'])}
-<a href="#reguest" onclick="reguest('{$item['userid']}','{$item['id']}')">回复</a> <a href="{SITE_URL}index.php?app=user&ac=guestbook&ts=del&id={$item['id']}" onclick="return confirm('确定删除?')">删除</a>
+<a href="#reguest" onclick="reguest('{$item['userid']}','{$item['id']}')">鍥炲</a> <a href="{SITE_URL}index.php?app=user&ac=guestbook&ts=del&id={$item['id']}" onclick="return confirm('纭畾鍒犻櫎?')">鍒犻櫎</a>
 {/if}
 </p>
-<!--回复留言-->
+<!--鍥炲鐣欒█-->
 
 </div>
 </li>

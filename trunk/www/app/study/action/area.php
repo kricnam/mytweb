@@ -9,8 +9,8 @@ $city = $new['study']->findAll('area',array(
 
 ));
 
-echo '<select id="area" name="area">
-	<option value="0">请选则区</option>';
+echo '<select id="area" name="area" >
+	  <option value="0">请选则区</option>';
 		foreach($city as $k=>$v){
 		echo '<option value="'.$v['areaid'].'">'.$v['area'].'</option>';
 		}

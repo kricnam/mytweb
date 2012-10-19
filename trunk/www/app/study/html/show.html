@@ -112,15 +112,16 @@ function doStudy(studyid,userid){
 </script>
 <div class="midder">
 
-<div class="mc">
-<h1>{$strStudy[title]}</h1>
+<div  class="mc">
+<h1 id="headermc">{$strStudy[title]}</h1>
 <div class="cleft">
 <link type="text/css" rel="stylesheet" href="{SITE_URL}app/{$app}/skins/{$skin}/topic_event.css" id="skin" />
 <!--class top part-->
 <div class="subjectwrap">
     <!--cangyu-->
-	<div id="actchoice">	
-		<!--{if $TS_USER[user][userid] == $strStudy['user']['userid']}-->
+	<div id="actchoice">
+	    <!--{if $nowtime>$strStudy['class_end_time']}-->	
+		<!--{elseif $TS_USER[user][userid] == $strStudy['user']['userid']||$strStudy['isaudit']==0}-->
 		<!--{elseif $TS_USER[user][userid] == ''|| $isStudyUser==''}-->
 		<a href="javascript:void('0');" onclick="userDoWish('{$strStudy[studyid]}','1');" class="redbutt  "><span>我感兴趣</span></a><br class="clear">
 		<a href="javascript:void('0');" onclick="userDoWish('{$strStudy[studyid]}','0');" class="redbutt  "><span>我要参加</span></a><br class="clear">
@@ -150,6 +151,7 @@ function doStudy(studyid,userid){
 		<table style="margin-left:-5px">
 		<tr><td valign="top"><span class="pl" >时间: </span></td><td valign="top">{$strStudy[time]}</td></tr>
 		</table>
+		<span class="pl">截止时间： </span>{$strStudy[class_end_time]}<br>
 	    <span class="pl">地点: </span>&nbsp;&nbsp;&nbsp;{$strStudy[address]} 
 		<br>
 		<span class="pl">费用: </span>&nbsp;&nbsp;&nbsp;{$strStudy[avgprice]}元 
@@ -171,14 +173,25 @@ function doStudy(studyid,userid){
 		<!--{/if}-->
 		<span>{$strStudy[count_userwish]}人感兴趣 &nbsp;  {$strStudy[count_userdo]}人参加</span><br>
 		<span style="font-style: normal; font-family: Arial; color: #ff0000; font-size: 13px; font-weight: normal; text-decoration: none;">
-		<!--{if $TS_USER[user][userid] == $strStudy['user']['userid']&&$strStudy['isaudit']==0}-->
+		<!--{if $nowtime>$strStudy['class_end_time']}-->
+		<span style="color: red;"> 课程报名已经截止</span>
+		<!--{elseif ($TS_USER[user][userid] == $strStudy['user']['userid']||$TS_USER[user][isadmin]=='1')&&$strStudy['isaudit']==0}-->
 		<span style="color: red;"> 课程已创建，等待审核中。。。审核通过后会通知您</span>
 		<!--{elseif $TS_USER[user][userid] == $strStudy['user']['userid']&&$strStudy['isaudit']==1}-->
-		<a href="{SITE_URL}index.php?app=study&ac=edit&ts=base&studyid={$strStudy[studyid]}">修改</a> 
-		<a href="{SITE_URL}index.php?app=study&ac=admin&mg=study&ts=del&record=1&studyid={$strStudy[studyid]}">删除</a>
+		<a href="{SITE_URL}index.php?app=study&ac=do&ts=del&studyid={$strStudy[studyid]}">删除</a>
 		<!--{else}-->
         <!--{/if}-->
-		</span><br>
+		</span>
+		<!-- JiaThis Button BEGIN -->
+		<div class="jiathis_style_32x32">
+			<a class="jiathis_button_qzone"></a>
+			<a class="jiathis_button_tsina"></a>
+			<a class="jiathis_button_tqq"></a>
+			<a class="jiathis_button_renren"></a>
+			<a class="jiathis_button_kaixin001"></a>
+			<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+			<a class="jiathis_counter_style"></a>
+		</div>
 		</div><br clear="all">
 	</div>
 </div>
@@ -196,12 +209,11 @@ function doStudy(studyid,userid){
 <!--{/if}-->
 
 
-<div style="text-align:right;">
+<div style="text-align:right;">	
 <!--{if $TS_USER[user][isadmin]=='1'}-->
-<a href="{SITE_URL}index.php?app=study&ac=admin&mg=study&ts=isaudit&studyid={$strStudy[studyid]}"> <!--{if $strStudy[isaudit] == 0}--><font color="red">[审核]</font><!--{else}-->[撤销审核]<!--{/if}--></a>
-<a href="{SITE_URL}index.php?app=study&ac=do&ts=recommend&&studyid={$strStudy[studyid]}&isrecommend=<!--{if $strStudy[isrecommend]==0}-->1<!--{else}-->0<!--{/if}-->"><!--{if $strStudy[isrecommend]==0}-->推荐<!--{else}-->取消推荐<!--{/if}--></a>
-<a href="{SITE_URL}index.php?app=study&ac=edit&ts=base&studyid={$strStudy[studyid]}">修改</a> 
-<a href="{SITE_URL}index.php?app=study&ac=admin&mg=study&ts=del&record=1&studyid={$strStudy[studyid]}">删除</a>
+<a href="{SITE_URL}index.php?app=study&ac=do&ts=isaudit&studyid={$strStudy[studyid]}"> <!--{if $strStudy[isaudit] == 0}--><font color="red">审核</font><!--{else}-->[撤销审核]<!--{/if}--></a>
+<a href="{SITE_URL}index.php?app=study&ac=do&ts=isrecommend&studyid={$strStudy[studyid]}"><!--{if $strStudy[isrecommend]==0}--><font color="red">推荐</font><!--{else}-->取消推荐<!--{/if}--></a>
+<a href="{SITE_URL}index.php?app=study&ac=do&record=1&ts=del&studyid={$strStudy[studyid]}">删除</a>
 <!--{/if}-->
 </div>
 
@@ -251,7 +263,7 @@ function doStudy(studyid,userid){
 <input class="submit" type="submit" value="加上去">
 </form>
 </div>
-{/if}
+<!--{/if}-->
 </div>
 <!-- right part -->
 <div class="cright">
@@ -324,5 +336,20 @@ function doStudy(studyid,userid){
  
 </div>
 </div>
-
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1334588685772498" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+<script type="text/javascript">
+var title = $("#headermc").html();
+var jiathis_config={
+sm:"tsina,tqq,renren,ishare",
+   url:window.location.href,
+   summary:"我刚刚用#陶老师#报名了"+title+"课程，果然很给力，感叹学海无涯啊。推荐给大家！（分享自 @陶老师 ）",
+   title:"#陶老师#",
+   pic:"",
+   ralateuid:{
+       "tsina":"tLaoshi"
+   },
+hideMore:false
+}
+</script>
 {template footer}

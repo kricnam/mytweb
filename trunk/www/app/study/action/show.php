@@ -7,6 +7,7 @@ $strStudy = $new['study']->getStudyByStudyid($studyid);
 $strStudy['user'] = simpleUser($strStudy['userid']);
 $strStudy['content'] = BBCode2Html($strStudy['content']);
 $strStudy['teachercontent'] = BBCode2Html($strStudy['teachercontent']);
+$nowtime = date("Y-m-d H:i");
 
 //标签
 $tag = $new['study']->getObjTagByObjid('study','studyid',$studyid);

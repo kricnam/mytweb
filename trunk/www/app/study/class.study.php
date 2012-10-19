@@ -16,13 +16,14 @@ class study extends tsApp{
 		
 		//时间
 		$weekarray=array("周日","周一","周二","周三","周四","周五","周六");
-		$time = $this->db->fetch_all_assoc("select * from ".dbprefix."study_time where studyid='".$studyid."' order by s_date asc");
+		$time = $this->db->fetch_all_assoc("select * from ".dbprefix."study_time where studyid='".$studyid."' order by s_date asc,s_time asc");
 		if(is_array($time)){
 			foreach($time as $key=>$item){;
 				$a = date('Y',strtotime($item['s_date'])).'年'.date('m',strtotime($item['s_date'])).'月'.date('d',strtotime($item['s_date'])).'日 '.$weekarray[date("w",strtotime($item['s_date']))].' '.date('H:i',strtotime($item['s_time'])).'-'.date('H:i',strtotime($item['e_time']));
 	            $b.= $a."<br>";		
 			}
 		}
+		
 		$strStudy['time']=$b;
 		
 		//地点
@@ -86,26 +87,34 @@ class study extends tsApp{
 	 *获取课程内容列表
 	*/
 	
-	function getStudys($page = 1, $prePageNum,$typeid = 0){
-		if($typeid!=0)
-		$where = ' where typeid='.$typeid.' ';
-		else $where = ' ';
+	function getStudys($page = 1, $prePageNum, $where, $orderby ='', $order = ''){
 		$start_limit = !empty($page) ? ($page - 1) * $prePageNum : 0;
 		$limit = $prePageNum ? "LIMIT $start_limit, $prePageNum" : '';
-		$arrStudyContentComment	= $this->db->fetch_all_assoc("select studyid from ".dbprefix."study ".$where." order by addtime desc $limit");
+		$arrStudyContentComment	= 
+		$this->db->fetch_all_assoc("select distinct ".dbprefix."study.studyid from ".dbprefix."study,".dbprefix."study_time 
+	    where ".dbprefix."study.studyid=".dbprefix."study_time.studyid and".$where." ".$orderby." ". $order." ". $limit);
 		return $arrStudyContentComment;
 	}
 	/*
 	 *获取课程列表数
 	*/
 	
-	function getStudysNum($typeid = 0){
-		if($typeid!=0)
-		$where = ' where typeid='.$typeid.' ';
-		else $where = ' ';
-		$res = "SELECT * FROM ".dbprefix."study".$where;
+	function getStudysNum($where){;
+		$res = "SELECT  distinct ".dbprefix."study.studyid From ".dbprefix."study,".dbprefix."study_time 
+	    where ".dbprefix."study.studyid=".dbprefix."study_time.studyid and".$where;
 		$StudysNum = $this->db->once_num_rows($res);
 		return $StudysNum;
+	}
+	/*
+	 *获取课程内容列表BYTAG
+	*/
+	
+	function getStudysByTag($page = 1, $prePageNum,$tagid){
+		$start_limit = !empty($page) ? ($page - 1) * $prePageNum : 0;
+		$limit = $prePageNum ? "LIMIT $start_limit, $prePageNum" : '';
+		$arrStudyContentComment	=
+		$this->db->fetch_all_assoc("select distinct studyid from ".dbprefix."tag_study_index where tagid=".$tagid." ".$limit);
+		return $arrStudyContentComment;
 	}
 	
 	//获取活动小组
@@ -129,12 +138,29 @@ class study extends tsApp{
 		return $arrTag;
 	
 	}
-	
+	//获取课程热门标签
+	function getHotTag(){
+		$HotTagid = $this->db->fetch_all_assoc("select tagid, count(tagid) as sum from ".dbprefix."tag_study_index group by tagid order by sum desc limit 0,25");
+		if(is_array($HotTagid )){
+			foreach($HotTagid as $key=>$item){
+				$arrHotTag[$key]['tagid'] = $item['tagid'];
+				$arrHotTag[$key]['tagname'] = $this->getOneTagName($item['tagid']);
+				$arrHotTag[$key]['sum'] = $item['sum'];
+			}
+		}
+		return $arrHotTag;
+	}
 	//通过tagid获得tagname
 	function getOneTag($tagid){
 		$tagData = $this->db->once_fetch_assoc("select * from ".dbprefix."tag where tagid='$tagid'");	
 		return $tagData;
 	}
+	function getOneTagName($tagid){
+		$tagData = $this->db->once_fetch_assoc("select * from ".dbprefix."tag where tagid='$tagid'");
+		return $tagData['tagname'];
+	}
+	
+
 	
 	
 }
