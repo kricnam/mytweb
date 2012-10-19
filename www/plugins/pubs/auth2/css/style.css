@@ -1,0 +1,22 @@
+#login {
+    font-size:20px;
+	background-color:#F1F1F1;
+	padding:10px;
+	border-top:1px dashed gray;
+	border-bottom:1px dashed gray;
+}
+input {
+    font-size:22px;
+}
+body {
+    font-size:20px;
+}
+a {
+    text-decoration:none;color:#75878a;
+}
+a:hover {
+    text-decoration:underline;color:#ff0097;
+}
+img {
+    border:0px;
+}
