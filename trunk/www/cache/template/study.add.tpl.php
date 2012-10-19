@@ -1,0 +1,203 @@
+<?php include template('header'); ?>
+
+<style>
+
+.newBtn:hover {
+    color: #FF6600;
+}
+
+.u17_container {
+    height: 60px;
+    position: absolute;
+    top: 155px;
+    width: 256px;
+}
+.u17_normal {
+    background-image: url("<?php echo SITE_URL;?>app/<?php echo $app;?>/skins/<?php echo $skin;?>/u17_normal.png");
+}
+#u17_img {
+    height: 26px;
+    left: 20px;
+    position: absolute;
+    top: -3px;
+    width: 222px;
+    padding:20px;
+}
+.u60_container {
+	float:left;
+    height: 360px;
+    position: absolute;
+    top: 225px;
+    width: 262px;
+}
+.u60_normal {
+    background-image: url("<?php echo SITE_URL;?>app/<?php echo $app;?>/skins/<?php echo $skin;?>/u60_normal.png");
+}
+#u60_img {
+    height: 326px;
+    left: 20px;
+    position: absolute;
+    top: -3px;
+    width: 216px;
+    padding:20px;
+}
+#u20_img {
+    height: 23px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 27px;
+}
+
+</style>
+<link type="text/css" rel="stylesheet" href="<?php echo SITE_URL;?>app/<?php echo $app;?>/skins/<?php echo $skin;?>/editor.css" />
+<script language="javascript" type="text/javascript" src="<?php echo SITE_URL;?>public/js/date/WdatePicker.js?4.72"></script>
+<script language="javascript" src="<?php echo SITE_URL;?>app/<?php echo $app;?>/js/formValidator-4.1.1.js" type="text/javascript" charset="UTF-8"></script>
+<script language="javascript" src="<?php echo SITE_URL;?>app/<?php echo $app;?>/js/formValidatorRegex.js" type="text/javascript" charset="UTF-8"></script>
+<script>
+$(document).ready(function(){
+	$("#province").change(function(){
+		var provinceid=$(this).val();
+		$("#citySpan").load("<?php echo SITE_URL;?>index.php?app=study&ac=city&provinceid="+provinceid);
+		$("#areaSpan").html("<select id=\"area\" name=\"area\"><option value=\"0\">请选则区</option></select>");
+	});	
+	 var h = 0;
+	 $("#newBtn").bind("click", function(){
+	  h++; 
+	  var str = "<input id='date_start"+h+"' name=\"date_start[]\"  style=\"width:100px;height:18px\" class=\"Wdate\" readonly value=\"\" onClick=\"WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'<?php echo date('Y-m-d')?>',minDate:'<?php echo date('Y-m-d',time()+0)?>'})\" />&nbsp;&nbsp; <input id='ts"+h+"' name=\"time_start[]\"  style=\"width:100px;height:18px\" class=\"Wdate\" readonly value=\"开始时间\" onClick=\"WdatePicker({dateFmt:'HH:mm'})\" /> &nbsp;至&nbsp;&nbsp;<input id=\"es"+h+"\" name=\"time_end[]\"   style=\"width:100px;height:18px\" class=\"Wdate\" readonly value=\"结束时间\" onClick=\"WdatePicker({dateFmt:'HH:mm'})\" />";	 
+	 $("#myTable").append("<p>"+str+"<img src='<?php echo SITE_URL;?>app/<?php echo $app;?>/skins/<?php echo $skin;?>/input_error.gif'   id='btn-cancel"+h+"' onclick=''/><br></p>");
+	 $("#btn-cancel"+h).bind("click",function(){$(this).parent().remove();});
+	 });
+      //form 验证开始
+      $.formValidator.initConfig({formID:"form1",theme:"ArrowSolidBox",mode:'AutoTip', onError:function(msg,obj,errorlist){$("#errorlist").empty();$.map(errorlist,function(msg){});}});
+      //$("#bbcodem").formValidator({onShow:"请输入你的描述",onFocus:"描述至少要输入2个汉字或4个字符",onCorrect:"恭喜你,你输对了"}).inputValidator({min:4,onError:"你输入的描述长度不正确,请确认"});
+      $("#title").formValidator({onShow:"请输入课程名称",onFocus:"课程名称至少要输入2个汉字或4个字符",onCorrect:"恭喜你,你输对了"}).inputValidator({min:4,onError:"你输入的课程名称长度不正确,请确认"});
+      $("#date_start0").formValidator({relativeID:"es0",onShow:"请选择日期",onFocus:"请选择日期",onCorrect:"恭喜你,你输对了"}).inputValidator({min:1,onError:"日期不能为空，请确认"});
+      $("#ts0").formValidator({relativeID:"es0",onShowText:"开始时间",onShow:"请选择开始时间",onFocus:"请选择开始时间",onCorrect:"恭喜你,你输对了",defaultValue:"开始时间"}).inputValidator({min:1,onError:"请选择开始时间不能为空，请确认"});
+      $("#es0").formValidator({relativeID:"es0",onShowText:"结束时间",onShow:"请选择结束时间",onFocus:"请选择结束时间",onCorrect:"恭喜你,你输对了",defaultValue:"结束时间"}).inputValidator({min:1,onError:"请选择结束时间不能为空，请确认"}).compareValidator({desID:"ts0",operateor:">",dataType:'time',onError:"结束时间需大于开始时间"});
+      $("#address").formValidator({onShowText:"请输入详细地址",onShow:"请输入详细地址",onFocus:"详细地址不能为空",onCorrect:"恭喜你,你输对了",defaultValue:"请输入详细地址"}).inputValidator({min:1,onError:"详细地址不能为空,请确认"});
+      $("#tag").formValidator({onShow:"请输入标签名称",onFocus:"标签不能为空",onCorrect:"恭喜你,你输对了"}).inputValidator({min:1,onError:"标签不能为空,请确认"});
+      $("#photo").formValidator({onShow:"请上传课程海报",onFocus:"课程海报不能为空",onCorrect:"恭喜你,你输对了"}).inputValidator({min:1,onError:"课程海报不能为空,请确认"});
+      $("#avgprice").formValidator({onShow:"请输入人均费用",onFocus:"人均费用为空",onCorrect:"恭喜你,你输对了"}).inputValidator({min:1,onError:"人均费用不能为空,请确认"});
+      $("#class_end_time").formValidator({onShow:"请输入截止时间",onFocus:"截止时间不能为空",onCorrect:"恭喜你,你输对了"}).inputValidator({min:1,onError:"截止时间不能为空,请确认"});
+      $("#pnum").formValidator({onShow:"请输入可容纳最多人数",onFocus:"可容纳最多人数不能为空",onCorrect:"恭喜你,你输对了"}).inputValidator({min:1,onError:"可容纳最多人数不能为空,请确认"});
+      $.formValidator.reloadAutoTip();
+  
+})
+    function selectArea(){
+		var cityid=$("#city").val();
+		$("#areaSpan").load("<?php echo SITE_URL;?>index.php?app=study&ac=area&cityid="+cityid);
+	}
+</script>
+
+<div class="midder">
+<div class="mc">
+
+<div class="cleft">
+<h1>
+<div class="nav-step">
+    <span style="color:#49A5DE;">1、填写课程信息  </span>
+    <span class="pl">&gt;</span>
+    <span class="pl">2、填写教师简介  </span>
+    <span class="pl">&gt;</span>
+    <span class="pl">3、发布</span>
+</div>
+</h1>
+<span style="color:red;padding:10px;">(请认真填写，后续不可更改)</span>
+<form  id="form1" method="POST" action="<?php echo SITE_URL;?>index.php?app=study&ac=do&ts=add" enctype="multipart/form-data">
+<table>
+<tbody>
+<tr>
+    <td width="100px">*课程名称 </td>
+	<td><input style="padding:0px 0px;width:250px;" type="text" value="" id="title" name="title" ></td>  
+</tr>
+<tr>
+	<td>&nbsp;课程类型</td>
+	<td>
+	<select name="typeid">
+	<?php foreach((array)$arrType as $key=>$item) {?>
+	<option value="<?php echo $item['typeid'];?>"><?php echo $item['typename'];?></option>
+	<?php }?>
+	</select>
+	</td>
+</tr>
+
+<tr>
+	<td>*课程地点</td>
+	<td>
+	<select id="province" name="province">
+	<option value='0' >请选则省</option>
+	<?php foreach((array)$province as $k=>$v) {?>
+	<option value="<?php echo $v['provinceid'];?>"><?php echo $v['province'];?></option>
+	<?php }?>
+	</select>
+	<span id="citySpan">
+		<select id="city" name="city">
+			<option value="0">请选则市</option>
+		</select>
+	</span>
+	<span id="areaSpan">
+		<select id="area" name="area">
+			<option value="0">请选则区</option>
+		</select>
+	</span>
+	<br>
+	<input style="width:200px;padding:0px"  id="address" name="address" value="详细地址"/>
+	</td>
+</tr>
+<tr><td valign="top">*内容</td><td><textarea style="width:515px;height:300px;" id="bbcodem" class="bbcodem_c" name="content"></textarea></td></tr>
+<tr><td>*标签</td><td><input style="padding:0px;width:300px;" id="tag" name="tag" /> (多个标签请用英文,号分开)</td></tr>
+<tr><td>*课程海报</td><td><input id="photo" type="file" name="photo" /> (仅支持jpg,gif,png)</td></tr>
+<tr><td>*人均费用</td><td><input style="padding:0;width:70px;" id="avgprice" name="avgprice"  onKeyup="this.value=this.value.replace(/[^\d\>\<]/g,'');" /> 元</td></tr>
+<tr><td>*截止时间	</td><td><input id="class_end_time" style="width:150px;height:18px"   name="class_end_time" readonly value="" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',minDate:'<?php echo date('Y-m-d')?> 00:00'})" />(课程报名截止时间不可以早于课程开始时间)</td></tr>
+<tr><td>*可容纳最多人数</td><td><input id="pnum" style="padding:0;width:70px;" name="pnum"  onKeyup="this.value=this.value.replace(/[^\d]/g,'');" /> 人</td></tr>
+<tr>
+	<td>*课程时间</td>	
+	<td>	
+	<input id="date_start0" name="date_start[]"  style="width:100px;height:18px" class="Wdate" readonly value="" onClick="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'<?php echo date('Y-m-d')?>',minDate:'<?php echo date('Y-m-d',time()+0)?>'})" />&nbsp;&nbsp;
+    <input id="ts0" name="time_start[]"  style="width:100px;height:18px" class="Wdate" readonly value="" onClick="WdatePicker({dateFmt:'HH:mm'})" /> &nbsp;至&nbsp;
+    <input id="es0" name="time_end[]"   style="width:100px;height:18px" class="Wdate" readonly  value="" onClick="WdatePicker({dateFmt:'HH:mm'})" />   
+    </td>
+</tr>
+<tr>
+    <td></td>
+	<td><div id='myTable'></div></td>
+</tr>
+<tr>
+	<td></td>
+	<td><img src='<?php echo SITE_URL;?>app/<?php echo $app;?>/skins/<?php echo $skin;?>/add.jpg'  class="newBtn" id="newBtn" name="newBtn"  onclick="" /></td>
+</tr>
+<!-- <input type='button' value="全部删除" id='delBtn' name='delBtn'  > -->
+<tr>
+	<td></td>
+	<td>
+	<input class="submit" type="submit" value="下一步">&nbsp;&nbsp;保存并开始填写教师简介
+	</td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+<!--right part-->
+<div class="cright" id="cright" >
+	<div class="u17_container" id="u17">
+	<div class="u17_normal" id="u17_img">
+               如需帮助，请随时给我们留言：
+      support@tlaoshi.com
+    </div>
+	</div>
+	<div class="u60_container" id="u60">
+	<div class="u60_normal" id="u60_img">
+	<span style="font-style: normal; font-family: 宋体; color: #00cc00; font-size: 13px; font-weight: normal; text-decoration: none;">如何才能让你的课程吸引人？</span><br><br>
+         １.题目简单明了<br>
+         ２.课程内容和特点介绍详细<br>
+         ３.价格定位合理<br><br>
+          更重要的是，邀请好友们都来参与	
+	</div>
+	</div>
+</div>
+</div>
+</div>
+<!--加载编辑器-->
+<?php doAction('xheditor')?>
+<?php include template('footer'); ?>
