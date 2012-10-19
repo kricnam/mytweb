@@ -1,0 +1,34 @@
+{template header}
+
+<link type="text/css" rel="stylesheet" href="{SITE_URL}app/study/skins/default/index.css" />
+<div class="midder">
+
+<div class="mc">  
+<div class="cleft">
+    <h1>{$strUser['username']}的主页<a style="float:right;color: #336699; text-decoration: line;" href="{SITE_URL}{tsUrl('user','space',array(id=>$userid))}" >去{$strUser['username']}的同城首页</a></h1>
+	<div class="block_headerline" style=" border-bottom: 0 dashed #DDDDDD;">	                                    
+	    <!--{loop $arrStudy $key $item}-->
+		<div class="nof clearfix" style="padding-top:5px;padding-bottom:10px;">
+			<div class="evtlstimg">
+			<a href="{SITE_URL}{tsUrl('study','show',array(studyid=>$item[studyid]))}" class="phs_link">
+			<img src="<!--{if $item[poster]}-->{SITE_URL}{php echo tsXimg($item[poster],'study',100,100,$item[path],1)}<!--{else}-->{SITE_URL}public/images/event_dft.jpg<!--{/if}-->"></a>
+			</div>
+		    <h2 style="margin-top:0px;margin-bottom:5px;"><a  href="{SITE_URL}{tsUrl('study','show',array(studyid=>$item[studyid]))}">{$item[title]}</a></h2>
+			<div class="intro">
+			<table style="margin-left:-5px">
+			<tr><td valign="top" style="padding-left: 5px;padding-right:0px;">{$item[time]}</td></tr>
+			</table>
+			{$item[address]}<br>
+			{$item[count_userdo]}人参加 &nbsp; {$item[count_userwish]}人感兴趣<br><br>
+			</div>
+		</div>
+		<!--{/loop}-->
+	</div>	
+	<div class="page">{$pageUrl}</div>
+</div>
+<div class="cright" style="vertical-align: top;">
+{template userinfo}
+</div>
+</div>
+</div>
+{template footer}
