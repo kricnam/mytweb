@@ -1,0 +1,9 @@
+wangyj   wangyongjian123
+php:     svn://202.85.213.20/pingluntuan/plt_web/  
+web:     svn://202.85.213.20/pingluntuan/web_page
+ftp:     202.85.213.20
+mysql:   alpha.gwdang.com/nobodyadmin  192.168.1.175
+
+
+https://mytweb.googlecode.com/svn/trunk/
+wyjbupt@gmail.com  dn2ah9kZ3RG2 

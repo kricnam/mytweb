@@ -1,0 +1,14 @@
+site_id 	name 	url 	class_id 网站归类
+11 	唯伊商城 	http://www.w1.cn/ 	3
+40 	春水堂 	http://www.oyeah.com.cn/ 	14
+43 	No5时尚广场 	http://www.no5.com.cn/ 	3
+52 	likeface 	http://www.likeface.com/ 	3
+92 	12点零食 	http://www.12dian.com/ 	10
+115 	D1优尚 	http://www.d1.com.cn/ 	0
+120 	锐意网 	http://www.rayi.cn/ 	2 少小LOGO
+125 	金象大药房 	http://www.jxdyf.com/ 	13
+
+淘总管 天猫-卖东西  淘宝-用户为主 
+1.输入URL 抓取PID  放到如api函数中 取回数组
+2.然后将取回数组里面的title price sid 拼起来再传入
+3.取回想要的消息 放入到aug/de where_str部分代码
