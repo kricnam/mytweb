@@ -1,0 +1,66 @@
+<?php include template('header'); ?>
+<!--加载编辑器-->
+<?php doAction('xheditor')?>
+<div class="midder">
+<div class="mc">
+
+<?php include template('menu'); ?>
+
+<h1><?php echo L::addspeed_fastpost?></h1>
+
+<form method="POST" action="<?php echo SITE_URL;?>index.php?app=group&ac=add&ts=do" onsubmit="return newTopicFrom(this)"  enctype="multipart/form-data">
+
+<table width="100%">
+<tbody>
+
+<tr><td width="50"><?php echo L::addspeed_group?>:</td>
+<td>
+<select name="groupid">
+<?php foreach((array)$arrGroup as $key=>$item) {?>
+<option value="<?php echo $item['groupid'];?>"><?php echo $item['groupname'];?></option>
+<?php }?>
+</select>
+</td></tr>
+
+<tr><td width="50"><?php echo L::addspeed_title?>:</td>
+<td><input style="padding:3px 0;width:600px;" type="text" name="title" /></td></tr>	
+
+
+<tr>
+<td valign="top">
+<?php echo L::addspeed_content?>:
+</td><td><textarea style="width:600px;height:200px;font-size:14px;" id="bbcode" name="content"></textarea></td></tr>
+
+<tr><td><?php echo L::addspeed_photo?>:</td><td><input type="file" name="picfile" /> (仅支持jpg,gif,png格式图片) <input type="checkbox" name="photoshow" value="1" />回复显示</td></tr>
+<tr><td><?php echo L::addspeed_attach?>:</td><td><input type="file" name="attfile" />  (仅支持zip,rar,dic,txt,pdf,ppt,docx,xls,xlsx格式附件) 下载需要<input style="width:30px;" type="text" name="attachscore" value="0" />积分 <input type="checkbox" name="attachshow" value="1" />回复显示</td></tr>
+
+<tr><td><?php echo L::addspeed_video?>:</td><td><input style="width:300px;" name="video" /> (仅支持外部视频链接：swf格式)</td></tr>
+	
+<tr><td><?php echo L::addspeed_comment?>:</td><td><input type="radio" checked="select" name="iscomment" value="0" />允许 <input type="radio" name="iscomment" value="1" />不允许</td></tr>
+
+<tr><td><?php echo L::addspeed_tag?>:</td><td><input type="text" name="tag" /> (多个标签请用,号分开)</td></tr>
+
+<?php doAction('group_add_speed_post')?>
+<tr><td></td><td>
+<input class="submit" type="submit" value="<?php echo L::addspeed_submit?>" /> 
+</td></tr>	
+	
+</tbody>
+</table>
+</div>
+</form>
+
+
+</div>
+</div>
+<script>
+/*function tag_ai_o(obj){
+  if($(obj).attr('checked')){
+    $('input[name=\'tag\']').hide();
+  }else{
+   $('input[name=\'tag\']').show().val($('input[name=\'tag\']').attr('def'));
+  }
+}*/
+</script>
+<?php doAction('group_add_speed_footer')?>
+<?php include template('footer'); ?>
