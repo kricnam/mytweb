@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: 127.0.0.1:3306
--- 生成日期: 2012 年 10 月 18 日 12:34
+-- 生成日期: 2012 年 10 月 19 日 15:11
 -- 服务器版本: 5.1.28
 -- PHP 版本: 5.2.6
 
@@ -4120,7 +4120,7 @@ CREATE TABLE IF NOT EXISTS `ts_feed` (
   `data` varchar(1024) NOT NULL DEFAULT '' COMMENT '动态数据',
   `addtime` int(11) NOT NULL DEFAULT '0' COMMENT '时间',
   PRIMARY KEY (`feedid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='全站动态' AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='全站动态' AUTO_INCREMENT=4 ;
 
 --
 -- 导出表中的数据 `ts_feed`
@@ -4128,7 +4128,8 @@ CREATE TABLE IF NOT EXISTS `ts_feed` (
 
 INSERT INTO `ts_feed` (`feedid`, `userid`, `template`, `data`, `addtime`) VALUES
 (1, 1, '<span class="pl">在 <a href="{group_link}">{group_name}</a> 创建了新话题：<a href="{topic_link}">{topic_title}</a></span><div class="broadsmr">{content}</div><div class="indentrec"><span><a  class="j a_rec_reply" href="{topic_link}">回应</a></span></div>', 'a:5:{s:10:"group_link";s:53:"http://127.0.0.1/www/index.php?app=group&ac=show&id=1";s:10:"group_name";s:2:"12";s:10:"topic_link";s:54:"http://127.0.0.1/www/index.php?app=group&ac=topic&id=1";s:11:"topic_title";s:4:"1212";s:7:"content";s:5:"12121";}', 1349445209),
-(2, 1, '<span class="pl">在 <a href="{group_link}">{group_name}</a> 创建了新话题：<a href="{topic_link}">{topic_title}</a></span><div class="broadsmr">{content}</div><div class="indentrec"><span><a  class="j a_rec_reply" href="{topic_link}">回应</a></span></div>', 'a:5:{s:10:"group_link";s:53:"http://127.0.0.1/www/index.php?app=group&ac=show&id=2";s:10:"group_name";s:2:"23";s:10:"topic_link";s:54:"http://127.0.0.1/www/index.php?app=group&ac=topic&id=2";s:11:"topic_title";s:2:"23";s:7:"content";s:2:"23";}', 1349602024);
+(2, 1, '<span class="pl">在 <a href="{group_link}">{group_name}</a> 创建了新话题：<a href="{topic_link}">{topic_title}</a></span><div class="broadsmr">{content}</div><div class="indentrec"><span><a  class="j a_rec_reply" href="{topic_link}">回应</a></span></div>', 'a:5:{s:10:"group_link";s:53:"http://127.0.0.1/www/index.php?app=group&ac=show&id=2";s:10:"group_name";s:2:"23";s:10:"topic_link";s:54:"http://127.0.0.1/www/index.php?app=group&ac=topic&id=2";s:11:"topic_title";s:2:"23";s:7:"content";s:2:"23";}', 1349602024),
+(3, 1, '<span class="pl">在 <a href="{group_link}">{group_name}</a> 创建了新话题：<a href="{topic_link}">{topic_title}</a></span><div class="broadsmr">{content}</div><div class="indentrec"><span><a  class="j a_rec_reply" href="{topic_link}">回应</a></span></div>', 'a:5:{s:10:"group_link";s:53:"http://127.0.0.1/www/index.php?app=group&ac=show&id=1";s:10:"group_name";s:2:"12";s:10:"topic_link";s:54:"http://127.0.0.1/www/index.php?app=group&ac=topic&id=3";s:11:"topic_title";s:2:"12";s:7:"content";s:2:"12";}', 1350565742);
 
 -- --------------------------------------------------------
 
@@ -4175,7 +4176,7 @@ CREATE TABLE IF NOT EXISTS `ts_group` (
 --
 
 INSERT INTO `ts_group` (`groupid`, `userid`, `cateid`, `cateid2`, `cateid3`, `groupname`, `groupname_en`, `groupdesc`, `path`, `groupicon`, `count_topic`, `count_topic_today`, `count_user`, `count_topic_audit`, `joinway`, `role_leader`, `role_admin`, `role_user`, `addtime`, `isrecommend`, `isopen`, `isaudit`, `ispost`, `isshow`, `ispostaudit`, `uptime`) VALUES
-(1, 1, 0, 0, 0, '12', '', '12', '', '', 1, 1, 2, 0, 0, '组长', '管理员', '成员', 1348298513, 0, 1, 0, 0, 0, 0, 1349445209),
+(1, 1, 0, 0, 0, '12', '', '12', '', '', 2, 1, 2, 0, 0, '组长', '管理员', '成员', 1348298513, 0, 1, 0, 0, 0, 0, 1350565742),
 (2, 1, 1, 3, 0, '23', '', '2323', '', '', 1, 1, 1, 0, 0, '组长', '管理员', '成员', 1348735692, 0, 0, 0, 0, 0, 0, 1349602024),
 (3, 1, 1, 5, 0, '英语小组', '', '总组', '', '', 0, 0, 1, 0, 0, '组长', '管理员', '成员', 1348736119, 0, 0, 0, 0, 0, 0, 0),
 (4, 1, 1, 6, 0, 'what', '', '1212', '', '', 0, 0, 1, 0, 0, '组长', '管理员', '成员', 1348736182, 0, 0, 0, 0, 0, 0, 0);
@@ -4274,7 +4275,7 @@ CREATE TABLE IF NOT EXISTS `ts_group_topics` (
   KEY `title` (`title`),
   KEY `groupid_2` (`groupid`,`isshow`),
   KEY `typeid` (`typeid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='小组话题' AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='小组话题' AUTO_INCREMENT=4 ;
 
 --
 -- 导出表中的数据 `ts_group_topics`
@@ -4282,7 +4283,8 @@ CREATE TABLE IF NOT EXISTS `ts_group_topics` (
 
 INSERT INTO `ts_group_topics` (`topicid`, `typeid`, `groupid`, `userid`, `appkey`, `appname`, `appaction`, `appid`, `title`, `content`, `thread_type`, `path`, `photo`, `photoshow`, `attach`, `attachname`, `attachshow`, `attachscore`, `music`, `video`, `count_comment`, `count_view`, `count_love`, `istop`, `isshow`, `isclose`, `color`, `iscomment`, `isposts`, `isaudit`, `addtime`, `uptime`) VALUES
 (1, 0, 1, 1, 'group', '小组', 'topic', 0, '1212', '[s][u][i][b]12121[/b][/i][/u][/s]', '', '', '', 0, '', '', 0, 0, '', '', 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 1349445209, 1349445209),
-(2, 0, 2, 1, 'group', '小组', 'topic', 0, '23', '23', '', '0/0', '0/0/2.gif', 0, '', '', 0, 0, '', '', 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1349602024, 1349602024);
+(2, 0, 2, 1, 'group', '小组', 'topic', 0, '23', '23', '', '0/0', '0/0/2.gif', 0, '', '', 0, 0, '', '', 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1349602024, 1349602024),
+(3, 0, 1, 1, 'group', '小组', 'topic', 0, '12', '12', '', '', '', 0, '', '', 0, 0, '', '', 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 1350565742, 1350565742);
 
 -- --------------------------------------------------------
 
@@ -4482,7 +4484,7 @@ CREATE TABLE IF NOT EXISTS `ts_message` (
   PRIMARY KEY (`messageid`),
   KEY `touserid` (`touserid`,`isread`),
   KEY `userid` (`userid`,`touserid`,`isread`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='短消息表' AUTO_INCREMENT=37 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='短消息表' AUTO_INCREMENT=55 ;
 
 --
 -- 导出表中的数据 `ts_message`
@@ -4523,8 +4525,26 @@ INSERT INTO `ts_message` (`messageid`, `userid`, `touserid`, `content`, `isread`
 (32, 0, 1, '你的活动：《英语英语英语英语》新增一条评论，快去看看给个回复吧^_^ <br />http://127.0.0.1/www/index.php/study/show/studyid-36', 1, 1349767470),
 (33, 0, 1, '恭喜你，你申请的课程《test》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=37', 1, 1349949402),
 (34, 0, 1, '恭喜你，你申请的课程《test》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=37', 1, 1349949510),
-(35, 0, 2, '恭喜你，你申请的课程《商务英语讲座—商务写作1》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=28', 0, 1349959093),
-(36, 0, 3, '亲爱的 fallbackwjj ：<br />您成功加入了 淘老师<br />在遵守本站的规定的同时，享受您的愉快之旅吧!', 0, 1349960040);
+(35, 0, 2, '恭喜你，你申请的课程《商务英语讲座—商务写作1》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=28', 1, 1349959093),
+(36, 0, 3, '亲爱的 fallbackwjj ：<br />您成功加入了 淘老师<br />在遵守本站的规定的同时，享受您的愉快之旅吧!', 0, 1349960040),
+(37, 0, 2, '恭喜你，你申请的课程《游戏设计》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=41', 0, 1350627527),
+(38, 0, 2, '恭喜你，你申请的课程《市场营销导论》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=40', 0, 1350627551),
+(39, 0, 1, '恭喜你，你申请的课程《信息安全导论》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=39', 1, 1350627557),
+(40, 0, 2, '恭喜你，你申请的课程《游戏设计》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=41', 0, 1350627672),
+(41, 0, 2, '恭喜你，你申请的课程《游戏设计》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=41', 0, 1350627802),
+(42, 0, 2, '恭喜你，你申请的课程《游戏设计》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=41', 0, 1350627836),
+(43, 0, 2, '恭喜你，你的课程《游戏设计》被推荐啦！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=41', 0, 1350627900),
+(44, 0, 2, '恭喜你，你申请的课程《游戏设计》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=41', 0, 1350628141),
+(45, 0, 2, '恭喜你，你的课程《游戏设计》被推荐啦！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=41', 0, 1350628172),
+(46, 0, 2, '恭喜你，你的课程《市场营销导论》被推荐啦！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=40', 0, 1350628178),
+(47, 0, 1, '恭喜你，你的课程《信息安全导论》被推荐啦！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=39', 1, 1350628184),
+(48, 0, 2, '恭喜你，你申请的课程《游戏设计》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=41', 0, 1350631428),
+(49, 0, 1, '恭喜你，你申请的课程《testest》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=43', 0, 1350638454),
+(50, 0, 1, '恭喜你，你申请的课程《testest》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=43', 0, 1350638478),
+(51, 0, 2, '恭喜你，你申请的课程《化学》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=42', 0, 1350638480),
+(52, 0, 2, '恭喜你，你申请的课程《化学》审核通过！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=42', 0, 1350638483),
+(53, 0, 1, '恭喜你，你的课程《信息安全导论》被推荐啦！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=39', 0, 1350639786),
+(54, 0, 1, '恭喜你，你的课程《信息安全导论》被推荐啦！快去看看吧<br />http://127.0.0.1/www/index.php?app=study&ac=show&studyid=39', 0, 1350639864);
 
 -- --------------------------------------------------------
 
@@ -4686,51 +4706,18 @@ CREATE TABLE IF NOT EXISTS `ts_study` (
   `addtime` int(11) NOT NULL DEFAULT '0' COMMENT '添加时间',
   PRIMARY KEY (`studyid`),
   KEY `areaid` (`areaid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='课程' AUTO_INCREMENT=38 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='课程' AUTO_INCREMENT=44 ;
 
 --
 -- 导出表中的数据 `ts_study`
 --
 
 INSERT INTO `ts_study` (`studyid`, `userid`, `groupid`, `typeid`, `title`, `provinceid`, `cityid`, `areaid`, `address`, `content`, `avgprice`, `class_end_time`, `pnum`, `path`, `poster`, `path_s`, `poster_s`, `teachercontent`, `teachername`, `count_userdo`, `count_userwish`, `isrecommend`, `isaudit`, `addtime`) VALUES
-(28, 2, 0, 2, '商务英语讲座—商务写作1', 110000, 110100, 110101, 'INN三号楼', '1212', 1001, '2012-10-11 12:11:00', 1001, '0/0', '0/0/28.jpg', '0/0', '0/0/28.jpg', 'American person ASY', 'Michael.J.sandel', 12, 23, 0, 0, 1349583085),
-(36, 1, 0, 4, '英语英语英语英语', 110000, 110100, 110101, '山西', '[b][color=#ff0000]测试[/color][/b]', 2312312, '2012-10-10 15:18:00', 657, '0/0', '0/0/36.jpg', '0/0', '0/0/36.jpg', 'test', 'Michael.J.sandel', 1, 0, 0, 0, 1349767117);
-
--- --------------------------------------------------------
-
---
--- 表的结构 `ts_study_backup`
---
-
-CREATE TABLE IF NOT EXISTS `ts_study_backup` (
-  `studyid` int(11) NOT NULL AUTO_INCREMENT COMMENT '课程ID',
-  `userid` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
-  `groupid` int(11) NOT NULL DEFAULT '0' COMMENT '小组ID',
-  `typeid` int(11) NOT NULL DEFAULT '0' COMMENT '课程类型ID',
-  `title` char(120) NOT NULL DEFAULT '' COMMENT '标题',
-  `content` text NOT NULL COMMENT '内容',
-  `time_start` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '开始时间',
-  `time_end` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '结束时间',
-  `path` char(32) NOT NULL DEFAULT '' COMMENT '图片路劲',
-  `poster` char(16) NOT NULL DEFAULT '' COMMENT '海报图片',
-  `areaid` int(11) NOT NULL DEFAULT '0' COMMENT '县区ID',
-  `address` char(120) NOT NULL DEFAULT '' COMMENT '详细地址',
-  `count_userdo` int(11) NOT NULL DEFAULT '0' COMMENT '统计参加的',
-  `count_userwish` int(11) NOT NULL DEFAULT '0' COMMENT '统计感兴趣的',
-  `isrecommend` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否推荐0默认1推荐',
-  `addtime` int(11) NOT NULL DEFAULT '0' COMMENT '添加时间',
-  PRIMARY KEY (`studyid`),
-  KEY `areaid` (`areaid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='课程' AUTO_INCREMENT=4 ;
-
---
--- 导出表中的数据 `ts_study_backup`
---
-
-INSERT INTO `ts_study_backup` (`studyid`, `userid`, `groupid`, `typeid`, `title`, `content`, `time_start`, `time_end`, `path`, `poster`, `areaid`, `address`, `count_userdo`, `count_userwish`, `isrecommend`, `addtime`) VALUES
-(1, 1, 0, 1, '12', '12', '2012-09-22 13:04:00', '2012-09-29 13:04:00', '', '', 0, '12', 0, 0, 0, 1348290277),
-(2, 1, 0, 1, '12', '12', '2012-09-22 13:06:00', '2012-09-29 13:06:00', '', '', 0, '12', 0, 0, 0, 1348290376),
-(3, 1, 0, 1, '34', '34<br />', '2012-09-22 13:58:00', '2012-09-30 13:58:00', '', '', 0, '34', 0, 0, 0, 1348293520);
+(39, 1, 0, 1, '信息安全导论', 110000, 110100, 110101, '西单', '信息安全导论绪论', 100, '2012-10-25 13:57:00', 100, '0/0', '0/0/39.jpg', '', '', '知名信息通信理论导师', 'Michael Json', 0, 0, 1, 1, 1350639864),
+(40, 2, 0, 1, '市场营销导论', 110000, 110100, 110101, '火星', '市场营销导论', 100, '2012-10-30 14:01:00', 1000, '0/0', '0/0/40.jpg', '0/0', '0/0/40.jpg', 'LABIKE', 'LABIKE', 0, 0, 1, 1, 1350626498),
+(41, 2, 0, 4, '游戏设计', 0, 0, 0, '火星', '游戏设计', 100, '2012-10-24 00:00:00', 200, '0/0', '0/0/41.jpg', '0/0', '0/0/41.gif', '游戏设计', '游戏设计', 1, 0, 0, 1, 1350627397),
+(42, 2, 0, 1, '化学', 540000, 540100, 540102, '火星', '化学', 100, '2012-10-19 01:21:00', 100, '0/0', '0/0/42.gif', '', '', 't', 't', 0, 0, 0, 0, 1350631311),
+(43, 1, 0, 1, 'testest', 0, 0, 0, '12', '12', 12, '2012-10-19 17:05:00', 12, '0/0', '0/0/43.gif', '', '', '12', '12', 0, 0, 0, 0, 1350637797);
 
 -- --------------------------------------------------------
 
@@ -4753,24 +4740,6 @@ CREATE TABLE IF NOT EXISTS `ts_study_comment` (
 -- 导出表中的数据 `ts_study_comment`
 --
 
-INSERT INTO `ts_study_comment` (`commentid`, `referid`, `studyid`, `userid`, `content`, `addtime`) VALUES
-(6, 0, 28, 1, '23', 1349620619),
-(5, 0, 28, 1, '<span style="color:#003333;">23</span>', 1349620616),
-(4, 0, 28, 1, '1<span style="color:#ff6666;">212</span>', 1349620545),
-(7, 0, 28, 1, '1', 1349620621),
-(8, 0, 28, 1, '1', 1349620624),
-(9, 0, 28, 1, '1', 1349620626),
-(10, 0, 28, 1, '1', 1349620629),
-(11, 0, 28, 1, '1', 1349620632),
-(12, 0, 28, 1, '1', 1349620634),
-(13, 0, 28, 1, '1', 1349620637),
-(14, 0, 28, 1, '1', 1349620642),
-(15, 0, 28, 1, '1', 1349620645),
-(16, 0, 28, 1, '1', 1349620648),
-(17, 0, 28, 1, '1', 1349620650),
-(18, 0, 28, 1, '1', 1349620653),
-(19, 0, 28, 1, '1', 1349620656),
-(20, 0, 36, 2, '<b><span style="color:#ff6600;"><img src="http://127.0.0.1/www/plugins/pubs/xheditor/xheditor_emot/default/mad.gif" alt="mad" /></span></b>', 1349767470);
 
 -- --------------------------------------------------------
 
@@ -4805,16 +4774,20 @@ CREATE TABLE IF NOT EXISTS `ts_study_time` (
   `s_time` time NOT NULL DEFAULT '00:00:00',
   `e_time` time NOT NULL DEFAULT '00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='课程' AUTO_INCREMENT=21 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='课程' AUTO_INCREMENT=29 ;
 
 --
 -- 导出表中的数据 `ts_study_time`
 --
 
 INSERT INTO `ts_study_time` (`id`, `studyid`, `userid`, `s_date`, `s_time`, `e_time`) VALUES
-(13, 28, 2, '2012-10-21', '12:00:00', '13:00:00'),
-(12, 28, 2, '2012-10-14', '12:10:00', '13:00:00'),
-(19, 36, 1, '2012-10-21', '00:00:00', '16:00:00');
+(24, 40, 2, '2012-11-10', '13:30:00', '15:00:00'),
+(23, 39, 1, '2012-10-31', '13:30:00', '14:00:00'),
+(22, 39, 1, '2012-10-26', '14:00:00', '23:55:00'),
+(25, 41, 2, '2012-10-31', '15:00:00', '16:00:00'),
+(26, 42, 2, '2012-10-19', '16:00:00', '21:19:00'),
+(27, 43, 1, '2012-10-31', '16:00:00', '17:30:00'),
+(28, 43, 1, '2012-10-24', '16:30:00', '19:00:00');
 
 -- --------------------------------------------------------
 
@@ -4865,8 +4838,7 @@ CREATE TABLE IF NOT EXISTS `ts_study_users` (
 --
 
 INSERT INTO `ts_study_users` (`studyid`, `userid`, `status`, `isorganizer`, `addtime`) VALUES
-(28, 1, 1, 0, 1349764745),
-(36, 2, 0, 0, 1349767438);
+(41, 1, 0, 0, 1350628538);
 
 -- --------------------------------------------------------
 
@@ -4924,7 +4896,7 @@ CREATE TABLE IF NOT EXISTS `ts_tag` (
   `uptime` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`tagid`),
   UNIQUE KEY `tagname` (`tagname`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
 
 --
 -- 导出表中的数据 `ts_tag`
@@ -4932,21 +4904,27 @@ CREATE TABLE IF NOT EXISTS `ts_tag` (
 
 INSERT INTO `ts_tag` (`tagid`, `tagname`, `count_user`, `count_study`, `count_group`, `count_topic`, `count_bang`, `count_article`, `count_photo`, `isenable`, `uptime`) VALUES
 (1, '23', 0, 0, 0, 0, 0, 2, 0, 0, 1348563390),
-(2, '12', 0, 2, 0, 0, 0, 1, 0, 0, 1349600586),
+(2, '12', 0, 1, 0, 1, 0, 1, 0, 0, 1350637797),
 (3, 'tes1', 0, 0, 0, 0, 0, 0, 0, 0, 1348581768),
 (4, '123', 0, 0, 0, 0, 0, 0, 0, 0, 1348581768),
 (5, '写作', 0, 0, 0, 0, 0, 0, 0, 0, 1348641082),
 (6, '电影', 0, 0, 0, 0, 0, 0, 0, 0, 1348641082),
 (7, 'dede', 0, 0, 0, 0, 0, 0, 0, 0, 1348848823),
-(8, 'test', 0, 1, 0, 0, 0, 0, 0, 0, 1349948045),
+(8, 'test', 0, 1, 0, 0, 0, 0, 0, 0, 1350623902),
 (9, 'test1', 0, 0, 0, 0, 0, 0, 0, 0, 1349443701),
 (10, '英语', 0, 2, 0, 0, 0, 0, 0, 0, 1349593609),
 (11, 'wyj', 0, 1, 0, 0, 0, 0, 0, 0, 1349593609),
 (12, '34', 0, 1, 0, 0, 0, 0, 0, 0, 1349604824),
-(13, '1', 0, 1, 0, 0, 0, 0, 0, 0, 1349767117),
-(14, '2', 0, 1, 0, 0, 0, 0, 0, 0, 1349767118),
-(15, '3', 0, 1, 0, 0, 0, 0, 0, 0, 1349767118),
-(16, 't', 0, 1, 0, 0, 0, 0, 0, 0, 1349948045);
+(13, 'ipad', 0, 1, 0, 0, 0, 0, 0, 0, 1349767117),
+(14, 'wap', 0, 1, 0, 0, 0, 0, 0, 0, 1349767118),
+(15, 'iphone', 0, 1, 0, 0, 0, 0, 0, 0, 1349767118),
+(16, 't', 0, 1, 0, 0, 0, 0, 0, 0, 1349948045),
+(17, '23213', 0, 0, 0, 1, 0, 0, 0, 0, 1350565742),
+(18, '23123', 0, 0, 0, 1, 0, 0, 0, 0, 1350565742),
+(19, '信息', 0, 2, 0, 0, 0, 0, 0, 0, 1350631311),
+(20, '安全', 0, 1, 0, 0, 0, 0, 0, 0, 1350626297),
+(21, '市场营销', 0, 1, 0, 0, 0, 0, 0, 0, 1350626498),
+(22, '游戏设计', 0, 1, 0, 0, 0, 0, 0, 0, 1350627397);
 
 -- --------------------------------------------------------
 
@@ -5028,10 +5006,12 @@ CREATE TABLE IF NOT EXISTS `ts_tag_study_index` (
 --
 
 INSERT INTO `ts_tag_study_index` (`studyid`, `tagid`) VALUES
-(28, 10),
-(36, 13),
-(36, 14),
-(36, 15);
+(39, 19),
+(39, 20),
+(40, 21),
+(41, 22),
+(42, 19),
+(43, 2);
 
 -- --------------------------------------------------------
 
@@ -5051,6 +5031,10 @@ CREATE TABLE IF NOT EXISTS `ts_tag_topic_index` (
 -- 导出表中的数据 `ts_tag_topic_index`
 --
 
+INSERT INTO `ts_tag_topic_index` (`topicid`, `tagid`) VALUES
+(3, 2),
+(3, 17),
+(3, 18);
 
 -- --------------------------------------------------------
 
@@ -5116,6 +5100,8 @@ CREATE TABLE IF NOT EXISTS `ts_user_follow` (
 -- 导出表中的数据 `ts_user_follow`
 --
 
+INSERT INTO `ts_user_follow` (`userid`, `userid_follow`, `addtime`) VALUES
+(1, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -5191,8 +5177,8 @@ CREATE TABLE IF NOT EXISTS `ts_user_info` (
 --
 
 INSERT INTO `ts_user_info` (`userid`, `ucid`, `fuserid`, `username`, `email`, `sex`, `phone`, `roleid`, `province`, `city`, `area`, `areaid`, `path`, `face`, `signed`, `blog`, `about`, `ip`, `address`, `qq_openid`, `qq_access_token`, `count_score`, `count_follow`, `count_followed`, `isadmin`, `isenable`, `isverify`, `verifycode`, `thems_other`, `addtime`, `uptime`) VALUES
-(1, 0, 0, 'fallback', 'wyjbupt@126.com', 0, '', 1, 120000, 120100, 120101, 0, '', 'face/4.jpg', '', '', '', '127.0.0.1', '', '', '', 760, 0, 0, 1, 0, 0, '', 0, 1348240449, 1350486307),
-(2, 0, 0, 'fellback', 'wyjccbupt@126.com', 0, '', 1, 0, 0, 0, 0, '', '', '', '', '', '127.0.0.1', '', '', '', 1130, 0, 0, 0, 0, 0, '', 0, 1348648071, 1349960063),
+(1, 0, 0, 'fallback', 'wyjbupt@126.com', 0, '', 1, 120000, 120100, 120101, 0, '', 'face/4.jpg', '', '', '', '127.0.0.1', '', '', '', 870, 0, 0, 1, 0, 0, 'BqnSBZTNH4e', 0, 1348240449, 1350636859),
+(2, 0, 0, 'fellback', 'wyjccbupt@126.com', 0, '', 1, 0, 0, 0, 0, '', '', '', '', '', '127.0.0.1', '', '', '', 1160, 0, 0, 0, 0, 0, '', 0, 1348648071, 1350631153),
 (3, 0, 0, 'fallbackwjj', 'wangyj@126.com', 0, '', 1, 0, 0, 0, 0, '', '', '', '', '', '127.0.0.1', '', '', '', 1000, 0, 0, 0, 0, 0, '', 0, 1349960040, 1349960040);
 
 -- --------------------------------------------------------
@@ -5315,7 +5301,7 @@ CREATE TABLE IF NOT EXISTS `ts_user_scores` (
   `addtime` int(11) NOT NULL DEFAULT '0' COMMENT '积分时间',
   PRIMARY KEY (`scoreid`),
   KEY `userid` (`userid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户积分' AUTO_INCREMENT=84 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户积分' AUTO_INCREMENT=94 ;
 
 --
 -- 导出表中的数据 `ts_user_scores`
@@ -5404,4 +5390,14 @@ INSERT INTO `ts_user_scores` (`scoreid`, `userid`, `scorename`, `score`, `addtim
 (80, 1, '登录', 10, 1350483909),
 (81, 1, '登录', 10, 1350484006),
 (82, 1, '登录', 10, 1350484219),
-(83, 1, '登录', 10, 1350486307);
+(83, 1, '登录', 10, 1350486307),
+(84, 1, '登录', 10, 1350564601),
+(85, 1, '发帖', 50, 1350565742),
+(86, 2, '登录', 10, 1350624700),
+(87, 1, '登录', 10, 1350625346),
+(88, 1, '登录', 10, 1350626030),
+(89, 2, '登录', 10, 1350626353),
+(90, 1, '登录', 10, 1350627522),
+(91, 2, '登录', 10, 1350631153),
+(92, 1, '登录', 10, 1350631360),
+(93, 1, '登录', 10, 1350636859);
