@@ -8,23 +8,23 @@ echo '<!--开始-->
 <div class="slides_container">
 
 <div class="slide">
-<a href="'.SITE_URL.tsUrl('user','register').'"><img width="600" height="210" src="'.SITE_URL.'plugins/home/slide/images/1.png" alt="开源社区" /></a>
+<a href="'.SITE_URL.tsUrl('user','register').'"><img width="581" height="333" src="'.SITE_URL.'plugins/home/slide/images/banner0.png" alt="开源社区" /></a>
 <div class="caption" style="bottom:0">
-<p>欢迎来到淘老师课程教学网站</p>
+<p>欢迎加入</p>
 </div>
 </div>
 
 <div class="slide">
-<a href="'.SITE_URL.tsUrl('user','register').'"><img width="600" height="210" src="'.SITE_URL.'plugins/home/slide/images/2.png"  alt="论坛" /></a>
+<a href="'.SITE_URL.tsUrl('user','register').'"><img width="581" height="333" src="'.SITE_URL.'plugins/home/slide/images/banner1.gif"  alt="论坛" /></a>
 <div class="caption" style="bottom:0">
-<p>欢迎来到淘老师课程教学网站</p>
+<p>欢迎加入</p>
 </div>
 </div>
 
 <div class="slide">
-<a href="'.SITE_URL.tsUrl('user','register').'"><img width="600" height="210" src="'.SITE_URL.'plugins/home/slide/images/3.png"  alt="bbs" /></a>
+<a href="'.SITE_URL.tsUrl('user','register').'"><img width="581" height="333" src="'.SITE_URL.'plugins/home/slide/images/banner2.gif"  alt="bbs" /></a>
 <div class="caption" style="bottom:0">
-<p>欢迎来到淘老师课程教学网站</p>
+<p>欢迎加入</p>
 </div>
 </div>
 
