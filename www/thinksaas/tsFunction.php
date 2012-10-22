@@ -592,12 +592,9 @@ function tsXimg($file, $app , $w, $h,$path='',$c='0'){
 		createFolders('cache/'.$app.'/'.$path.'/'.$w);
 		$dest = 'uploadfile/'.$app.'/'.$file;
 		$arrImg = getimagesize($dest);
-		if($arrImg[0] <= $w){
-			copy($dest,$cpath);
-		}else{
 			require_once 'thinksaas/tsImage.php';
 			$resizeimage = new tsImage("$dest", $w, $h, $c,"$cpath");
-		}
+		
 	}
 	return $cpath;
 }
