@@ -153,7 +153,7 @@ $nowtime = date("Y-m-d H:i");
 				$db->query("update ".dbprefix."study set `count_userdo`='$userDoNum',`count_userwish`='$userWishNum' where studyid='$studyid'");
 				
 				//study
-				$strStudy = $db->once_fetch_assoc("select title,time_start,path,poster,address,count_userdo from ".dbprefix."study where `studyid`='$studyid'");
+				$strStudy = $db->once_fetch_assoc("select title,path,poster,address,count_userdo from ".dbprefix."study where `studyid`='$studyid'");
 				
 				//feed开始
 				if($status == 1){
