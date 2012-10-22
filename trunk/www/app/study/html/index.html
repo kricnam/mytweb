@@ -54,9 +54,17 @@ $(document).ready(function(){
     background: url("{SITE_URL}app/{$app}/skins/{$skin}/icon_form.gif") no-repeat scroll 0 0 transparent;
     display: inline-block;
 }
-.tags{padding-top:30px;padding-right:2px;height:180px;}
+.tags{height:180px;padding-right:2px;}
 .tags ul{}
-.tags ul li{float:left;}
+.tags ul li{
+    float:left;
+    height:30px;
+    /* 针对IE的Hack */
+	*display: block;
+	*font-size: 26.19px;/*约为高度的0.873*/
+	*font-family:Arial;/*防止非utf-8引起的hack失效问题，如gbk编码*/
+    position: relative;
+}
 .u17_container {
     height: 60px;
     position: absolute;
@@ -158,28 +166,29 @@ $(document).ready(function(){
 	
 	</div>
 </div>
-
+<div style="float: left; padding-right: 10px; width: 730px; overflow: hidden;">
+	<!-- menu -->
+	<div style="position: relative;">
+	<div class="top-wp">
+	<ul class="tabs">
+	{php   $Order_filter_a = get_url_query($url_args, array('page','orderby','order'));
+	       $Order_url_1 = array_merge($Order_filter_a,array(orderby=>'order by class_end_time',order=>'asc'));
+	       $Order_url_2 = array_merge($Order_filter_a,array(orderby=>'order by count_userdo desc,',order=>'count_userwish desc'));
+	       $Order_url_3 = array_merge($Order_filter_a,array(orderby=>'order by avgprice',order=>'asc'));
+	       $Order_url_4 = array_merge($Order_filter_a,array(orderby=>'order by addtime',order=>'desc'));
+	}
+	<li><a {if $orderby=='order by class_end_time'}class="current"{/if} href="{SITE_URL}{tsUrl('study','index',{$Order_url_1})}"><span>即将截止</span></a></li>
+	<li><a {if $orderby=='order by count_userdo desc,'}class="current"{/if} href="{SITE_URL}{tsUrl('study','index',{$Order_url_2})}">热度</a></li>
+	<li><a {if $orderby=='order by avgprice'}class="current"{/if} href="{SITE_URL}{tsUrl('study','index',{$Order_url_3})}"><span>价格</span></a></li>
+	<li><a {if $orderby=='order by addtime'}class="current"{/if} href="{SITE_URL}{tsUrl('study','index',{$Order_url_4})}"><span>最新发布</span></a></li>
+	<li style="float:right;"><a  style="margin-right:0px;background:#336699;color:#FFFFFF;" href="{SITE_URL}index.php?app=study&ac=add" >创建同城课程</a></li>
+	</ul>
+	</div>
+	</div>
+	<!-- menu end-->
+</div>
 <!--content-->
 <div class="article">
-<!-- menu -->
-<div style="position: relative;">
-<div class="top-wp">
-<ul class="tabs">
-{php   $Order_filter_a = get_url_query($url_args, array('page','orderby','order'));
-       $Order_url_1 = array_merge($Order_filter_a,array(orderby=>'order by class_end_time',order=>'asc'));
-       $Order_url_2 = array_merge($Order_filter_a,array(orderby=>'order by count_userdo desc,',order=>'count_userwish desc'));
-       $Order_url_3 = array_merge($Order_filter_a,array(orderby=>'order by avgprice',order=>'asc'));
-       $Order_url_4 = array_merge($Order_filter_a,array(orderby=>'order by addtime',order=>'desc'));
-}
-<li><a {if $orderby=='order by class_end_time'}class="current"{/if} href="{SITE_URL}{tsUrl('study','index',{$Order_url_1})}"><span>即将截止</span></a></li>
-<li><a {if $orderby=='order by count_userdo desc,'}class="current"{/if} href="{SITE_URL}{tsUrl('study','index',{$Order_url_2})}">热度</a></li>
-<li><a {if $orderby=='order by avgprice'}class="current"{/if} href="{SITE_URL}{tsUrl('study','index',{$Order_url_3})}"><span>价格</span></a></li>
-<li><a {if $orderby=='order by addtime'}class="current"{/if} href="{SITE_URL}{tsUrl('study','index',{$Order_url_4})}"><span>最新发布</span></a></li>
-<li style="float:right;"><a href="{SITE_URL}index.php?app=study&ac=add" >创建同城课程</a></li>
-</ul>
-</div>
-</div>
-<!-- menu end-->
 <div class="clear"></div>
 	<div id="wt_0">
 	<div class="zoom choosedCon">
