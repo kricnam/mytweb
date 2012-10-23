@@ -7,13 +7,13 @@ return array (
     array (
       'typeid' => '1',
       'typename' => '公开课',
-      'count_study' => '2',
+      'count_study' => '1',
     ),
     1 => 
     array (
       'typeid' => '2',
       'typename' => '职业认证',
-      'count_study' => '0',
+      'count_study' => '1',
     ),
     2 => 
     array (
@@ -25,7 +25,7 @@ return array (
     array (
       'typeid' => '4',
       'typename' => '计算机与网络',
-      'count_study' => '1',
+      'count_study' => '0',
     ),
     4 => 
     array (
@@ -64,5 +64,5 @@ return array (
       'count_study' => '0',
     ),
   ),
-  'count' => '3',
+  'count' => '2',
 );
